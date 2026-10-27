@@ -1,0 +1,60 @@
+# Cada push a main: exporta el juego a web con Godot y lo publica en Cloudflare Pages (https://dijimones.pages.dev).
+# Secrets del repo: CLOUDFLARE_API_TOKEN (permiso "Cloudflare Pages: Edit") y CLOUDFLARE_ACCOUNT_ID.
+name: Deploy a Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+env:
+  GODOT_VERSION: 4.7.2
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache de Godot y plantillas de export
+        id: cache-godot
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/godot
+            ~/.local/share/godot/export_templates
+          key: godot-${{ env.GODOT_VERSION }}
+
+      - name: Instalar Godot ${{ env.GODOT_VERSION }}
+        if: steps.cache-godot.outputs.cache-hit != 'true'
+        run: |
+          base=https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable
+          mkdir -p ~/godot ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          curl -sSL -o godot.zip "$base/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q godot.zip -d ~/godot
+          mv ~/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64 ~/godot/godot
+          curl -sSL -o templates.tpz "$base/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+          unzip -q templates.tpz -d /tmp/tpl
+          mv /tmp/tpl/templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
+
+      - name: Exportar a web
+        run: |
+          mkdir -p build/web
+          cd game
+          ~/godot/godot --headless --path . --import || true
+          ~/godot/godot --headless --path . --export-release "Web" ../build/web/index.html
+          test -f ../build/web/index.wasm
+
+      - name: Preparar para Cloudflare (partir index.wasm)
+        run: python3 tools/prepare_cloudflare.py
+
+      - name: Publicar en Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy build/cloudflare --project-name dijimones --branch main

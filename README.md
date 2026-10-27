@@ -31,3 +31,8 @@ Con los modelos en `blender/source/raw/<Nombre>/`, `python3 blender/scripts/proc
 ```
 godot --path game                      # abrir en el editor y darle Play
 ```
+
+## Deploy automático
+Cada push a `main` corre `.github/workflows/deploy.yml`: exporta con Godot, parte el `.wasm` y publica en
+Cloudflare Pages (https://dijimones.pages.dev). Necesita los secrets `CLOUDFLARE_API_TOKEN` (permiso
+"Cloudflare Pages: Edit") y `CLOUDFLARE_ACCOUNT_ID` en el repo.
