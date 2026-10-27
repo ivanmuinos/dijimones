@@ -20,6 +20,9 @@ var next_boss: Array = []
 var banner := ""
 var banner_time := 0.0
 var end_text := ""
+var end_hint := "R: jugar de nuevo · Esc: menú"
+## peer_id -> Player: compañeros en co-op
+var team := {}
 
 var _font := ThemeDB.fallback_font
 var _shown_hp := 1.0
@@ -46,6 +49,9 @@ func _draw() -> void:
 	_draw_slots()
 	_draw_special()
 	_draw_stone_arrow()
+	_draw_team()
+	if player.dead and end_text == "":
+		_paper_label("¡Caíste! Un compañero te revive quedándose cerca", size.y * 0.75, 11, Color(1, 0.4, 0.3))
 	if banner_time > 0.0:
 		_paper_label(banner, size.y * 0.24, 15, Color(1, 0.85, 0.3))
 	if end_text != "":
@@ -54,7 +60,7 @@ func _draw() -> void:
 		var m := int(time) / 60
 		var s := int(time) % 60
 		_paper_label("Nivel %d · %d kills · %02d:%02d" % [player.level, kills, m, s], size.y * 0.53, 12, INK)
-		_paper_label("R: jugar de nuevo · Esc: menú", size.y * 0.63, 11, INK)
+		_paper_label(end_hint, size.y * 0.63, 11, INK)
 
 
 # --- partes ----------------------------------------------------------------------------------------
@@ -155,6 +161,26 @@ func _draw_special() -> void:
 		draw_arc(c, r + 5, 0, TAU, 32, Color(col, pulse), 2.5)
 		_text_c(player.special_name(), c + Vector2(0, -r - 10), 9, Color.WHITE)
 	_text_c("R", c + Vector2(0, 5), 14, Color.WHITE)
+
+
+## Compañeros (co-op): nombre, especie y vida, arriba a la izquierda.
+func _draw_team() -> void:
+	if team.size() <= 1:
+		return
+	var y := 14.0
+	for p in team.values():
+		if p == player:
+			continue
+		var r := Rect2(6, y, 120, 22)
+		_paper(r)
+		_text("%s · %s" % [p.player_name, p.species()], r.position + Vector2(5, 10), 8, INK)
+		var bar := Rect2(r.position + Vector2(5, 13), Vector2(r.size.x - 10, 5))
+		draw_rect(bar, Color(0.25, 0.08, 0.1))
+		if p.dead:
+			draw_rect(Rect2(bar.position, Vector2(bar.size.x * p.revive, bar.size.y)), Color(0.4, 1, 0.5))
+		else:
+			draw_rect(Rect2(bar.position, Vector2(bar.size.x * p.hp / maxf(p.stats.max_hp, 1.0), bar.size.y)), Color(0.3, 0.85, 0.35))
+		y += 26.0
 
 
 ## Flecha en el borde de la pantalla hacia la Piedra Sagrada más cercana que no se ve.

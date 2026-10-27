@@ -13,6 +13,7 @@ config/features=PackedStringArray("4.7", "GL Compatibility")
 DigimonDB="*res://scripts/autoload/digimon_db.gd"
 Session="*res://scripts/autoload/session.gd"
 Music="*res://scripts/autoload/music.gd"
+Net="*res://scripts/autoload/net.gd"
 
 [display]
 

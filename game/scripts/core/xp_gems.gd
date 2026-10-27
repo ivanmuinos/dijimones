@@ -27,14 +27,24 @@ func drop(at: Vector2, amount: int) -> void:
 	pulled.append(0)
 
 
-func tick(delta: float, target: Vector2, magnet: float) -> void:
+## Cada gema va hacia el jugador más cercano que la tenga en su imán; la XP es compartida.
+func tick(delta: float, targets: PackedVector2Array, magnets: PackedFloat32Array) -> void:
 	var i := pos.size() - 1
 	while i >= 0:
-		var d := target.distance_to(pos[i])
-		if d < magnet:
+		var best := -1
+		var d := INF
+		for k in targets.size():
+			var dk := targets[k].distance_to(pos[i])
+			if dk < d:
+				d = dk
+				best = k
+		if best < 0:
+			i -= 1
+			continue
+		if d < magnets[best]:
 			pulled[i] = 1
 		if pulled[i]:
-			pos[i] = pos[i].move_toward(target, PULL_SPEED * delta)
+			pos[i] = pos[i].move_toward(targets[best], PULL_SPEED * delta)
 		if d < PICKUP_RADIUS:
 			collected.emit(value[i])
 			var last := pos.size() - 1

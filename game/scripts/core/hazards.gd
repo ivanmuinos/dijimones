@@ -3,7 +3,7 @@ extends RefCounted
 ## Cosas peligrosas o premios que no son enemigos: avisos de golpe al piso (se esquivan saltando),
 ## proyectiles de jefes y cofres que sueltan los jefes al morir.
 
-signal chest_opened
+signal chest_opened(player: Player)
 
 const SHOT_RADIUS := 5.0
 const SHOT_LIFE := 4.0
@@ -45,14 +45,15 @@ func drop_chest(at: Vector2) -> void:
 	chests.append(at)
 
 
-func tick(delta: float, player: Player) -> void:
+func tick(delta: float, players: Array) -> void:
 	slams_now.clear()
 	var i := warn_pos.size() - 1
 	while i >= 0:
 		warn_left[i] -= delta
 		if warn_left[i] <= 0.0:
-			if player.position.distance_to(warn_pos[i]) < warn_radius[i] + player.radius() and not player.airborne():
-				player.take_hit(warn_damage[i])
+			for player in players:
+				if player.position.distance_to(warn_pos[i]) < warn_radius[i] + player.radius() and not player.airborne():
+					player.take_hit(warn_damage[i])
 			slams_now.append([warn_pos[i], warn_radius[i]])
 			_remove_warn(i)
 		i -= 1
@@ -60,17 +61,22 @@ func tick(delta: float, player: Player) -> void:
 	while i >= 0:
 		shot_pos[i] += shot_vel[i] * delta
 		shot_life[i] -= delta
-		var hit := player.position.distance_to(shot_pos[i]) < SHOT_RADIUS + player.radius() and not player.airborne()
-		if hit:
-			player.take_hit(shot_damage[i])
+		var hit := false
+		for player in players:
+			if player.position.distance_to(shot_pos[i]) < SHOT_RADIUS + player.radius() and not player.airborne():
+				player.take_hit(shot_damage[i])
+				hit = true
+				break
 		if hit or shot_life[i] <= 0.0:
 			_remove_shot(i)
 		i -= 1
 	i = chests.size() - 1
 	while i >= 0:
-		if player.position.distance_to(chests[i]) < CHEST_PICKUP:
-			chests.remove_at(i)
-			chest_opened.emit()
+		for player in players:
+			if player.position.distance_to(chests[i]) < CHEST_PICKUP:
+				chests.remove_at(i)
+				chest_opened.emit(player)
+				break
 		i -= 1
 
 

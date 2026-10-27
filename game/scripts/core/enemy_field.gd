@@ -16,7 +16,6 @@ const MAX_ENEMIES := 500
 const KNOCKBACK_DECAY := 8.0
 const FLASH_TIME := 0.1
 
-var player_radius := 8.0
 
 var pos := PackedVector2Array()
 var knock := PackedVector2Array()
@@ -74,14 +73,20 @@ func radius_of(i: int) -> float:
 
 ## Mueve a todos hacia el jugador, separa los que se pisan y devuelve el `damage` más alto
 ## entre los que lo están tocando (0 si ninguno).
-func tick(delta: float, target: Vector2) -> float:
-	var contact_damage := 0.0
+## `targets`/`radii`: jugadores vivos. Cada enemigo persigue al más cercano.
+## Devuelve, por jugador, el `damage` más alto de los enemigos que lo tocan.
+func tick(delta: float, targets: PackedVector2Array, radii: PackedFloat32Array) -> PackedFloat32Array:
+	var contact := PackedFloat32Array()
+	contact.resize(targets.size())
 	_grid.clear()
 	for i in count():
 		_grid.insert(i, pos[i])
 	for i in count():
 		var data := data_of(i)
-		var to_target := target - pos[i]
+		var t := _nearest_target(pos[i], targets)
+		if t < 0:
+			continue
+		var to_target := targets[t] - pos[i]
 		var dir := to_target.normalized()
 		var step := dir * data.speed + knock[i]
 		if data.behavior != EnemyData.Behavior.CHASE:
@@ -103,10 +108,53 @@ func tick(delta: float, target: Vector2) -> float:
 		if absf(dir.x) > 0.1:
 			facing_left[i] = 1 if dir.x < 0.0 else 0
 		turn[i] = move_toward(turn[i], -1.0 if facing_left[i] else 1.0, 7.0 * delta)
-		if to_target.length() < r + player_radius:
-			contact_damage = maxf(contact_damage, data.damage)
+		if to_target.length() < r + radii[t]:
+			contact[t] = maxf(contact[t], data.damage)
 	queue_redraw()
-	return contact_damage
+	return contact
+
+
+func _nearest_target(from: Vector2, targets: PackedVector2Array) -> int:
+	var best := -1
+	var best_d := INF
+	for k in targets.size():
+		var d := from.distance_squared_to(targets[k])
+		if d < best_d:
+			best_d = d
+			best = k
+	return best
+
+
+## Cliente online: reemplaza el estado con lo que manda el host (no simula).
+func apply_snapshot(table: Array, kinds: PackedByteArray, positions: PackedVector2Array,
+		flashes: PackedByteArray, turns: PackedByteArray, times: PackedFloat32Array) -> void:
+	var map := PackedInt32Array()
+	for entry in table:
+		var d := EnemyData.new()
+		d.species = entry[0]
+		d.scale = entry[1]
+		d.boss = entry[2]
+		d.display_name = entry[3]
+		var found := -1
+		for k in _types.size():
+			if _types[k].species == d.species and _types[k].scale == d.scale:
+				found = k
+		map.append(found if found >= 0 else _type_index(d))
+	var n := positions.size()
+	pos = positions
+	anim_time = times
+	kind.resize(n)
+	flash.resize(n)
+	turn.resize(n)
+	for i in n:
+		kind[i] = map[kinds[i]]
+		flash[i] = 0.1 if flashes[i] else 0.0
+		turn[i] = turns[i] / 127.0 - 1.0
+
+
+## Para el snapshot del host: tabla de tipos [especie, escala, jefe, nombre].
+func type_table() -> Array:
+	return _types.map(func(d): return [d.species, d.scale, d.boss, d.label()])
 
 
 ## Ataques de jefes. Devuelve el desplazamiento de este frame.

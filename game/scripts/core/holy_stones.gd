@@ -3,7 +3,7 @@ extends RefCounted
 ## Piedras Sagradas (santuarios, idea de PokeBonk/Megabonk con lore de Adventure 02): aparecen por el mapa;
 ## si te quedás cerca CHARGE_TIME segundos se activan y dan un bonus permanente para la run.
 
-signal activated(pos: Vector2, reward: Dictionary)
+signal activated(pos: Vector2, reward: Dictionary, player_index: int)
 
 const ACTIVE := 3
 const RADIUS := 44.0  # px: zona de carga alrededor de la piedra
@@ -25,18 +25,28 @@ var reward_index := PackedInt32Array()
 var _rng := RandomNumberGenerator.new()
 
 
-func tick(delta: float, player_pos: Vector2, can_place: Callable) -> void:
+## `targets`: posiciones de los jugadores vivos. Carga cualquiera que esté cerca; el premio es para él.
+func tick(delta: float, targets: PackedVector2Array, can_place: Callable) -> void:
+	if targets.is_empty():
+		return
+	var player_pos := targets[0]
 	while pos.size() < ACTIVE:
 		_place(player_pos, can_place)
 	var i := pos.size() - 1
 	while i >= 0:
-		var d := player_pos.distance_to(pos[i])
+		var who := -1
+		var d := INF
+		for k in targets.size():
+			var dk := targets[k].distance_to(pos[i])
+			if dk < d:
+				d = dk
+				who = k
 		if d < RADIUS:
 			charge[i] += delta / CHARGE_TIME
 		else:
 			charge[i] = maxf(charge[i] - delta / (CHARGE_TIME * 2.0), 0.0)
 		if charge[i] >= 1.0:
-			activated.emit(pos[i], REWARDS[reward_index[i]])
+			activated.emit(pos[i], REWARDS[reward_index[i]], who)
 			_remove(i)
 		elif d > SPAWN_DIST.y * 1.8:
 			_remove(i)  # quedó muy lejos: aparece otra más cerca

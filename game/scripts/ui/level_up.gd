@@ -3,12 +3,14 @@ extends Control
 ## mientras elige y, si no elige en TIMEOUT segundos, se elige una opción al azar.
 
 signal chosen(option: Dictionary)
+signal chosen_index(index: int)
 
 const TIMEOUT := 5.0
 
 var _options: Array = []
 var _time_left := 0.0
 var _queue := 0  # level ups pendientes
+var _remote_queue: Array = []
 var _font := ThemeDB.fallback_font
 var _cards: Array[Rect2] = []
 
@@ -26,7 +28,19 @@ func enqueue() -> void:
 		_open_next()
 
 
+## Online (cliente): las opciones las arma el host.
+func enqueue_options(options: Array) -> void:
+	_remote_queue.append(options)
+	if not is_open():
+		_open_next()
+
+
 func _open_next() -> void:
+	if not _remote_queue.is_empty():
+		_options = _remote_queue.pop_front()
+		_time_left = TIMEOUT
+		visible = true
+		return
 	if _queue <= 0:
 		return
 	_queue -= 1
@@ -49,6 +63,7 @@ func _choose(i: int) -> void:
 	if i < 0 or i >= _options.size():
 		return
 	var option: Dictionary = _options[i]
+	chosen_index.emit(i)
 	_options = []
 	visible = false
 	chosen.emit(option)

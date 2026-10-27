@@ -24,7 +24,9 @@ const WATER_SHADER := preload("res://shaders/paper_water.gdshader")
 
 var stage: StageData
 var terrain: Terrain
-var player: Player
+var player: Player  # el jugador local: la cámara lo sigue
+var team := {}  # peer_id -> Player (todos, incluido el local)
+var team_arsenals := {}  # peer_id -> Arsenal (para el aura de cada uno)
 var enemies: EnemyField
 var projectiles: Projectiles
 var gems: XpGems
@@ -37,8 +39,8 @@ var zoom := 1.0
 var _target := Vector3.ZERO
 var _materials := {}
 var _chunks := {}  # Vector2i -> MeshInstance3D
-var _player_card: Dictionary
-var _player_turn := 1.0
+var _player_cards := {}  # peer_id -> card
+var _player_turns := {}  # peer_id -> giro de hoja
 var _enemy_cards := {}  # especie -> card
 var _shadows: MultiMeshInstance3D
 var _shots: MultiMeshInstance3D
@@ -108,13 +110,11 @@ func zoom_by(factor: float) -> void:
 	zoom = clampf(zoom * factor, ZOOM_RANGE.x, ZOOM_RANGE.y)
 
 
-func shockwave(radius_px: float) -> void:
-	_effects.append([_player_3d_floor(), radius_px / PX, 0.6, 0.6, Color(1, 1, 0.75)])
-
-
-func special(radius_px: float, color: Color) -> void:
-	_effects.append([_player_3d_floor(), radius_px / PX, 0.8, 0.8, color])
-	_effects.append([_player_3d_floor(), radius_px / PX * 0.6, 0.5, 0.5, Color.WHITE])
+## Onda expansiva en el piso (digievolución, especial, Piedra Sagrada).
+func burst(at_px: Vector2, radius_px: float, color: Color) -> void:
+	var at := to_3d(at_px, _h(at_px))
+	_effects.append([at, radius_px / PX, 0.8, 0.8, color])
+	_effects.append([at, radius_px / PX * 0.6, 0.5, 0.5, Color.WHITE])
 
 
 func render(delta: float) -> void:
@@ -297,19 +297,29 @@ func _ensure_capacity(mm: MultiMesh, n: int) -> void:
 
 
 func _render_player(delta: float) -> void:
-	var species := player.species()
-	var anim := player.anim_name()
-	if _player_card.is_empty() or _player_card["species"] != species or _player_card["anim_name"] != anim:
-		if not _player_card.is_empty():
-			_player_card["mmi"].queue_free()
-		_player_card = _card(species, anim)
-	var target := -1.0 if player.facing_left() else 1.0
-	_player_turn = move_toward(_player_turn, target, TURN_SPEED * delta)
-	var mm: MultiMesh = _player_card["mmi"].multimesh
-	_ensure_capacity(mm, 1)
-	mm.set_instance_transform(0, Transform3D(Basis(), to_3d(player.position, player.z)))
-	var flash := 0.6 if player.hurt_flash() else 0.0
-	mm.set_instance_custom_data(0, Color(player.anim_frame(), _player_turn, flash, 0))
+	for peer_id in _player_cards.keys():
+		if not team.has(peer_id):
+			_player_cards[peer_id]["mmi"].queue_free()
+			_player_cards.erase(peer_id)
+	for peer_id in team:
+		var p: Player = team[peer_id]
+		var species := p.species()
+		var anim := p.anim_name()
+		var card: Dictionary = _player_cards.get(peer_id, {})
+		if card.is_empty() or card["species"] != species or card["anim_name"] != anim:
+			if not card.is_empty():
+				card["mmi"].queue_free()
+			card = _card(species, anim)
+			_player_cards[peer_id] = card
+		var target := -1.0 if p.facing_left() else 1.0
+		_player_turns[peer_id] = move_toward(_player_turns.get(peer_id, 1.0), target, TURN_SPEED * delta)
+		var mm: MultiMesh = card["mmi"].multimesh
+		_ensure_capacity(mm, 1)
+		# caído: acostado de costado (escala chata) hasta que lo revivan
+		var basis := Basis.from_scale(Vector3(1, 0.35, 1)) if p.dead else Basis()
+		mm.set_instance_transform(0, Transform3D(basis, to_3d(p.position, p.z)))
+		var flash := 0.6 if p.hurt_flash() else (0.4 if p.dead else 0.0)
+		mm.set_instance_custom_data(0, Color(p.anim_frame(), _player_turns[peer_id], flash, 0))
 
 
 func _render_enemies() -> void:
@@ -356,16 +366,20 @@ func _flat_multimesh(kind: int, billboard: bool, on_ground: bool) -> MultiMeshIn
 
 func _render_shadows() -> void:
 	var mm := _shadows.multimesh
-	var n := enemies.count() + 1
+	var players := team.values()
+	var n := enemies.count() + players.size()
 	_ensure_capacity(mm, n)
-	# la sombra del jugador se achica cuando salta
-	var r := player.radius() / PX * 2.6 * CHAR_SCALE / (1.0 + (player.z - player.floor_height) * 0.6)
-	mm.set_instance_transform(0, Transform3D(Basis.from_scale(Vector3(r, 1, r * 0.6)), _player_3d_floor() + Vector3(0, 0.01, 0)))
-	mm.set_instance_custom_data(0, Color(0, 0, 0, 1))
+	for k in players.size():
+		var p: Player = players[k]
+		# la sombra se achica cuando salta
+		var r := p.radius() / PX * 2.6 * CHAR_SCALE / (1.0 + (p.z - p.floor_height) * 0.6)
+		mm.set_instance_transform(k, Transform3D(Basis.from_scale(Vector3(r, 1, r * 0.6)), to_3d(p.position, p.floor_height + 0.01)))
+		mm.set_instance_custom_data(k, Color(0, 0, 0, 1))
+	var off := players.size()
 	for i in enemies.count():
 		var er := enemies.radius_of(i) / PX * 2.6 * CHAR_SCALE
-		mm.set_instance_transform(i + 1, Transform3D(Basis.from_scale(Vector3(er, 1, er * 0.6)), to_3d(enemies.pos[i], _h(enemies.pos[i]) + 0.01)))
-		mm.set_instance_custom_data(i + 1, Color(0, 0, 0, 1))
+		mm.set_instance_transform(i + off, Transform3D(Basis.from_scale(Vector3(er, 1, er * 0.6)), to_3d(enemies.pos[i], _h(enemies.pos[i]) + 0.01)))
+		mm.set_instance_custom_data(i + off, Color(0, 0, 0, 1))
 
 
 func _render_shots() -> void:
@@ -428,9 +442,18 @@ func _render_stones() -> void:
 func _render_rings(delta: float) -> void:
 	var mm := _rings.multimesh
 	var rings := []
-	for w in arsenal.weapons:
-		if w.kind == WeaponData.Kind.AURA:
-			rings.append([_player_3d_floor() + Vector3(0, 0.02, 0), arsenal.aura_radius(w) / PX, Color(w.color, 0.5 + arsenal.aura_pulse())])
+	for peer_id in team:
+		var p: Player = team[peer_id]
+		var a: Arsenal = team_arsenals.get(peer_id)
+		var at := to_3d(p.position, p.floor_height + 0.02)
+		if a and not p.dead:
+			for w in a.weapons:
+				if w.kind == WeaponData.Kind.AURA:
+					rings.append([at, a.aura_radius(w) / PX, Color(w.color, 0.5 + a.aura_pulse())])
+		if p.dead:
+			# zona para revivir y su progreso
+			rings.append([at, 40.0 / PX, Color(1, 0.3, 0.3, 0.5)])
+			rings.append([at, 40.0 / PX * p.revive, Color(0.4, 1, 0.5, 0.9)])
 	for k in hazards.warn_pos.size():
 		var p := hazards.warn_pos[k]
 		var t := 1.0 - hazards.warn_left[k] / hazards.warn_total[k]

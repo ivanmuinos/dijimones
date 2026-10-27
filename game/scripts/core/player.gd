@@ -7,6 +7,10 @@ signal digivolved(from_species: String, to_species: String)
 signal died
 
 var character: CharacterData
+var peer_id := 1
+var player_name := ""
+## Caído: un compañero lo revive quedándose cerca (progreso 0..1)
+var revive := 0.0
 var stats := Stats.new()
 var hp := 100.0
 var level := 1
@@ -51,6 +55,60 @@ func species() -> String:
 
 func radius() -> float:
 	return DigimonDB.species(species())["radius"]
+
+
+## Jugador remoto en el host: su cliente manda posición, altura y hacia dónde mira.
+func set_remote(state: Dictionary) -> void:
+	position = state.get("p", position)
+	z = state.get("z", z)
+	floor_height = state.get("f", floor_height)
+	invulnerable = 0.2 if state.get("menu", false) else invulnerable
+	if dead:
+		return
+	_sprite.flip_h = state.get("l", _sprite.flip_h)
+	_sprite.offset.x = -_anchor().x if not _sprite.flip_h else _anchor().x - _size()
+	if _locked_anim == "":
+		_play("correr" if state.get("m", false) else "idle")
+
+
+## Estado para el snapshot del host.
+func snapshot() -> Array:
+	return [peer_id, position, z, floor_height, stage, _sprite.animation, _sprite.frame, _sprite.flip_h,
+		hp, stats.max_hp, level, xp, special, dead, revive]
+
+
+## Cliente: aplica el estado del host. Al jugador propio no le pisa la posición ni la animación.
+func apply_snapshot(s: Array, is_me: bool) -> void:
+	if not is_me:
+		position = s[1]
+		z = s[2]
+		floor_height = s[3]
+	if s[4] != stage:
+		stage = s[4]
+		stats.set_stage(stage)
+		_load_species()
+	if not is_me:
+		if _sprite.animation != s[5]:
+			_sprite.play(s[5])
+		_sprite.frame = s[6]
+		_sprite.flip_h = s[7]
+		_sprite.offset.x = -_anchor().x if not _sprite.flip_h else _anchor().x - _size()
+	if s[8] < hp - 0.5:
+		_hurt_flash = 0.1
+	hp = s[8]
+	stats.max_hp = s[9]
+	level = s[10]
+	xp = s[11]
+	special = s[12]
+	dead = s[13]
+	revive = s[14]
+
+
+func revive_now() -> void:
+	dead = false
+	revive = 0.0
+	hp = stats.max_hp * 0.5
+	invulnerable = 2.0
 
 
 func anim_name() -> String:

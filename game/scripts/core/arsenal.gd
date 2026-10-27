@@ -57,6 +57,46 @@ func level_up_options() -> Array:
 	return pool.slice(0, 3)
 
 
+## Opciones de level up como datos simples, para mandarlas por la red.
+static func option_to_wire(option: Dictionary) -> Array:
+	if option.is_empty():
+		return ["heal", "", 0]
+	return ["w" if option["item"] is WeaponData else "p", option["item"].id, option["level"]]
+
+
+static func option_from_wire(w: Array) -> Dictionary:
+	if w[0] == "heal":
+		return {}
+	var pool: Array = WEAPON_POOL if w[0] == "w" else PASSIVE_POOL
+	for item in pool:
+		if item.id == w[1]:
+			return {"item": item, "level": w[2]}
+	return {}
+
+
+## Armas y chips con nivel, para el HUD de los clientes.
+func items_to_wire() -> Array:
+	var out := []
+	for w in weapons:
+		out.append(["w", w.id, weapons[w]])
+	for p in passives:
+		out.append(["p", p.id, passives[p]])
+	return out
+
+
+func items_from_wire(items: Array) -> void:
+	weapons.clear()
+	passives.clear()
+	for it in items:
+		var o := option_from_wire(it)
+		if o.is_empty():
+			continue
+		if it[0] == "w":
+			weapons[o["item"]] = it[2]
+		else:
+			passives[o["item"]] = it[2]
+
+
 func apply(option: Dictionary) -> void:
 	if option.is_empty():
 		player.hp = minf(player.hp + 30.0, player.stats.max_hp)
