@@ -11,6 +11,8 @@ var _cards: Array[Rect2] = []
 var _sprites: Array[AnimatedSprite2D] = []
 var _font := ThemeDB.fallback_font
 var _play_rect := Rect2()
+var _mode_rects: Array[Rect2] = []
+const MODES := [["clasico", "Clásico", "15 min · 4 jefes"], ["supervivencia", "Supervivencia", "Infinito · hitos cada 5 min"]]
 
 
 func _ready() -> void:
@@ -49,6 +51,9 @@ func _layout() -> void:
 		var anchor: Vector2 = info["anchor"]
 		_sprites[i].position = Vector2(r.get_center().x, r.position.y + 80) - anchor * _sprites[i].scale
 	_play_rect = Rect2((size.x - 140) / 2, size.y - 44, 140, 30)
+	_mode_rects.clear()
+	for k in MODES.size():
+		_mode_rects.append(Rect2(size.x / 2 - 210 + k * 330, size.y - 44, 90, 30))
 	queue_redraw()
 
 
@@ -61,6 +66,9 @@ func _gui_input(event: InputEvent) -> void:
 		for i in _cards.size():
 			if _cards[i].has_point(event.position):
 				_selected = i
+		for k in _mode_rects.size():
+			if _mode_rects[k].has_point(event.position):
+				Session.mode = MODES[k][0]
 		if _play_rect.has_point(event.position):
 			_start()
 
@@ -72,6 +80,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				_selected = posmod(_selected - 1, _cards.size())
 			KEY_RIGHT, KEY_D:
 				_selected = posmod(_selected + 1, _cards.size())
+			KEY_TAB:
+				Session.mode = "supervivencia" if Session.mode == "clasico" else "clasico"
 			KEY_ENTER, KEY_KP_ENTER:
 				_start()
 
@@ -113,13 +123,21 @@ func _draw() -> void:
 		_center(c.starting_weapon.display_name, r.position.y + 133, 9, Color(0.75, 0.35, 0.1), r)
 		draw_multiline_string(_font, Vector2(r.position.x + 6, r.position.y + 143), c.description,
 			HORIZONTAL_ALIGNMENT_CENTER, r.size.x - 12, 7, 2, Color(0.35, 0.3, 0.35))
+	# modo de juego
+	for k in _mode_rects.size():
+		var r := _mode_rects[k]
+		var sel: bool = Session.mode == MODES[k][0]
+		draw_rect(Rect2(r.position + Vector2(2, 2), r.size), Color(0, 0, 0, 0.3))
+		draw_rect(r, Color(0.35, 0.55, 0.95) if sel else PAPER)
+		_center(MODES[k][1], r.position.y + 13, 10, Color.WHITE if sel else INK, r)
+		_center(MODES[k][2], r.position.y + 25, 7, Color(1, 1, 1, 0.85) if sel else Color(0.4, 0.35, 0.5), r)
 	# botón jugar
 	var pulse := 0.85 + 0.15 * sin(Time.get_ticks_msec() * 0.006)
 	draw_rect(Rect2(_play_rect.position + Vector2(3, 3), _play_rect.size), Color(0, 0, 0, 0.3))
 	draw_rect(_play_rect, Color(1, 0.6, 0.15) * pulse)
 	draw_rect(_play_rect, PAPER, false, 2.0)
 	_center("¡JUGAR!", _play_rect.position.y + 21, 16, Color.WHITE)
-	_center("Mover: WASD/flechas · Saltar: Espacio · Especial: R · Zoom: rueda o Q/E · Mejoras: 1/2/3 · Música: M",
+	_center("Mover: WASD/flechas · Saltar: Espacio · Especial: R · Zoom: rueda o Q/E · Mejoras: 1/2/3 · Música: M · Modo: Tab",
 		size.y - 6, 8, Color(0.1, 0.25, 0.1))
 
 

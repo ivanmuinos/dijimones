@@ -15,6 +15,8 @@ var _base_hp := 100.0
 var _base_speed := 70.0
 var _stage := 0
 var _passives := {}  # PassiveData -> nivel
+## Bonus permanentes de la run (Piedras Sagradas): stat -> valor sumado
+var _bonus := {}
 
 
 func setup(character: CharacterData) -> void:
@@ -25,6 +27,11 @@ func setup(character: CharacterData) -> void:
 
 func set_stage(stage: int) -> void:
 	_stage = stage
+	recompute()
+
+
+func add_bonus(stat: String, value: float) -> void:
+	_bonus[stat] = _bonus.get(stat, 0.0) + value
 	recompute()
 
 
@@ -43,9 +50,14 @@ func recompute() -> void:
 	magnet = 60.0
 	armor = 0.0
 	recovery = 0.0
+	var all := []
 	for passive in _passives:
-		var bonus: float = passive.per_level * _passives[passive]
-		match passive.stat:
+		all.append([passive.stat, passive.per_level * _passives[passive]])
+	for stat in _bonus:
+		all.append([stat, _bonus[stat]])
+	for entry in all:
+		var bonus: float = entry[1]
+		match entry[0]:
 			"might": might += bonus
 			"speed": speed *= 1.0 + bonus
 			"area": area += bonus

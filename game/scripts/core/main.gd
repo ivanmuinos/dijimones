@@ -13,6 +13,8 @@ const SPECIAL_DAMAGE := 220.0
 const SPECIAL_PER_XP := 0.012
 const SPECIAL_PER_KILL := 0.004
 const ZOOM_STEP := 1.12
+## Supervivencia: después de la duración del mapa sigue para siempre, con un jefe al azar cada MILESTONE.
+const MILESTONE := 300.0
 
 var character: CharacterData = DEFAULT_CHARACTER
 var player := Player.new()
@@ -21,6 +23,8 @@ var projectiles := Projectiles.new()
 var gems := XpGems.new()
 var arsenal := Arsenal.new()
 var hazards := Hazards.new()
+var stones := HolyStones.new()
+var survival := Session.mode == "supervivencia"
 var terrain := Terrain.new(STAGE)
 var hud := preload("res://scripts/ui/hud.gd").new()
 var level_up := preload("res://scripts/ui/level_up.gd").new()
@@ -35,6 +39,7 @@ var _next_report := 60.0
 var _spawn_timer := 0.0
 var _bosses_spawned := {}
 var _bosses_warned := {}
+var _next_milestone := STAGE.duration
 
 
 func _ready() -> void:
@@ -66,6 +71,7 @@ func _ready() -> void:
 	enemies.attack_slam.connect(hazards.slam)
 	enemies.attack_shot.connect(hazards.shot)
 	hazards.chest_opened.connect(_on_chest)
+	stones.activated.connect(_on_stone)
 	gems.collected.connect(_on_xp)
 
 	var ui := CanvasLayer.new()
@@ -85,11 +91,16 @@ func _ready() -> void:
 	view.arsenal = arsenal
 	view.hazards = hazards
 	view.terrain = terrain
+	view.stones = stones
+	hud.stones = stones
 	view.setup(STAGE)
 	level_up.visible = false
 	level_up.options_provider = arsenal.level_up_options
 	level_up.chosen.connect(arsenal.apply)
-	hud.show_banner("%s — sobreviví %d minutos" % [STAGE.display_name, int(STAGE.duration / 60)], 3.0)
+	if survival:
+		hud.show_banner("%s — Supervivencia: ¿cuánto aguantás?" % STAGE.display_name, 3.0)
+	else:
+		hud.show_banner("%s — sobreviví %d minutos" % [STAGE.display_name, int(STAGE.duration / 60)], 3.0)
 	if autotest:
 		player.use_autopilot = true
 		level_up.auto_pick = true
@@ -134,13 +145,14 @@ func _process(delta: float) -> void:
 	if not player.airborne():
 		player.take_damage(contact)
 	hazards.tick(delta, player)
+	stones.tick(delta, player.position, _can_place_stone)
 	arsenal.tick(delta)
 	projectiles.tick(delta)
 	enemies.remove_dead()
 	gems.tick(delta, player.position, player.stats.magnet)
 	hud.bosses = _boss_bars()
 	hud.next_boss = _next_boss()
-	if time >= STAGE.duration and running:
+	if time >= STAGE.duration and running and not survival:
 		_end("¡SOBREVIVISTE!")
 	if autotest and time >= _next_report:
 		_next_report += 60.0
@@ -173,16 +185,28 @@ func _spawn(delta: float) -> void:
 			_bosses_spawned[b] = true
 			enemies.spawn(b.enemy, _spawn_point(), 1.0)
 			hud.show_banner("¡Apareció %s!" % b.enemy.label())
+	if survival and time >= _next_milestone:
+		_milestone()
 	var wave: WaveData = STAGE.wave_at(time)
 	if wave == null:
 		return
 	_spawn_timer -= delta
 	if _spawn_timer > 0.0:
 		return
-	_spawn_timer = wave.interval
+	# en Supervivencia, pasado el final del mapa las oleadas siguen creciendo
+	var extra := maxf(time - STAGE.duration, 0.0)
+	_spawn_timer = wave.interval * maxf(0.45, 1.0 - extra / 1200.0)
 	var hp_mult := 1.0 + time / 180.0
-	for k in wave.batch:
+	for k in wave.batch + int(extra / 120.0):
 		enemies.spawn(wave.enemies.pick_random(), _spawn_point(), hp_mult)
+
+
+## Hito de Supervivencia: jefe al azar más fuerte cada vez, y cofre al derrotarlo.
+func _milestone() -> void:
+	_next_milestone += MILESTONE
+	var boss: EnemyData = STAGE.bosses.pick_random().enemy
+	enemies.spawn(boss, _spawn_point(), 1.0 + time / 300.0)
+	hud.show_banner("¡Hito %d:00! Aparece %s" % [int(time / 60), boss.label()], 3.0)
 
 
 func _spawn_point() -> Vector2:
@@ -211,6 +235,21 @@ func _on_enemy_killed(at: Vector2, data: EnemyData) -> void:
 	if data.boss:
 		hazards.drop_chest(at)
 		hud.show_banner("¡%s derrotado! Soltó un cofre" % data.label())
+
+
+## Las piedras no aparecen arriba de acantilados ni en el mar.
+func _can_place_stone(p: Vector2) -> bool:
+	if STAGE.water_from_x != INF and p.x > (STAGE.water_from_x - 3.0) * PaperView.PX:
+		return false
+	return terrain.height_at(p) == 0.0
+
+
+func _on_stone(_at: Vector2, reward: Dictionary) -> void:
+	var before := player.stats.max_hp
+	player.stats.add_bonus(reward["stat"], reward["value"])
+	player.hp += player.stats.max_hp - before
+	hud.show_banner("¡%s! %s" % [reward["name"], reward["text"]], 2.5)
+	view.special(90.0, reward["color"])
 
 
 ## Cofre de jefe: 1 a 3 mejoras gratis (como en Vampire Survivors).
@@ -252,6 +291,8 @@ func _next_boss() -> Array:
 		if not _bosses_spawned.has(b) and (best == null or b.time < best.time):
 			best = b
 	if best == null:
+		if survival:
+			return ["Hito sorpresa", _next_milestone - time]
 		return []
 	var left := best.time - time
 	if left <= 10.0 and not _bosses_warned.has(best):
@@ -271,6 +312,8 @@ func _boss_bars() -> Array:
 
 func _end(text: String) -> void:
 	running = false
+	if survival:
+		text = "¡Aguantaste %d:%02d!" % [int(time) / 60, int(time) % 60]
 	hud.end_text = text
 	player.play_once("victoria" if text != "GAME OVER" else "golpe")
 	if autotest:

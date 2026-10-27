@@ -9,6 +9,7 @@ const SLOT := 26.0
 var player: Player
 var arsenal: Arsenal
 var view: PaperView
+var stones: HolyStones
 var player_name := ""
 var time := 0.0
 var kills := 0
@@ -44,6 +45,7 @@ func _draw() -> void:
 	_draw_health()
 	_draw_slots()
 	_draw_special()
+	_draw_stone_arrow()
 	if banner_time > 0.0:
 		_paper_label(banner, size.y * 0.24, 15, Color(1, 0.85, 0.3))
 	if end_text != "":
@@ -153,6 +155,34 @@ func _draw_special() -> void:
 		draw_arc(c, r + 5, 0, TAU, 32, Color(col, pulse), 2.5)
 		_text_c(player.special_name(), c + Vector2(0, -r - 10), 9, Color.WHITE)
 	_text_c("R", c + Vector2(0, 5), 14, Color.WHITE)
+
+
+## Flecha en el borde de la pantalla hacia la Piedra Sagrada más cercana que no se ve.
+func _draw_stone_arrow() -> void:
+	if stones == null or view == null or stones.pos.is_empty():
+		return
+	var best := 0
+	for i in stones.pos.size():
+		if player.position.distance_to(stones.pos[i]) < player.position.distance_to(stones.pos[best]):
+			best = i
+	var world := PaperView.to_3d(stones.pos[best], 0.8)
+	if view.camera.is_position_behind(world):
+		return
+	var sp := view.camera.unproject_position(world)
+	var margin := 26.0
+	var area := Rect2(Vector2(margin, margin + 20), size - Vector2(margin * 2, margin * 2 + 60))
+	if area.has_point(sp):
+		return
+	var c := area.get_center()
+	var dir := (sp - c).normalized()
+	var t := minf(absf(area.size.x / 2 / dir.x) if dir.x != 0.0 else INF, absf(area.size.y / 2 / dir.y) if dir.y != 0.0 else INF)
+	var at := c + dir * t
+	var col := stones.color_of(best)
+	var pts := PackedVector2Array([at + dir * 9, at + dir.orthogonal() * 6, at - dir.orthogonal() * 6])
+	draw_colored_polygon(pts, PAPER)
+	draw_colored_polygon(PackedVector2Array([at + dir * 6, at + dir.orthogonal() * 4 - dir, at - dir.orthogonal() * 4 - dir]), col)
+	var d := int(player.position.distance_to(stones.pos[best]) / PaperView.PX)
+	_text_c("%d m" % d, at - dir * 14 + Vector2(0, 4), 8, Color.WHITE)
 
 
 # --- helpers -------------------------------------------------------------------------------------

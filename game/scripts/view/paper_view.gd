@@ -30,6 +30,7 @@ var projectiles: Projectiles
 var gems: XpGems
 var arsenal: Arsenal
 var hazards: Hazards
+var stones: HolyStones
 
 var camera := Camera3D.new()
 var zoom := 1.0
@@ -45,6 +46,7 @@ var _enemy_shots: MultiMeshInstance3D
 var _gems: MultiMeshInstance3D
 var _rings: MultiMeshInstance3D
 var _chests: MultiMeshInstance3D
+var _stones: MultiMeshInstance3D
 var _mountains: Array[MultiMeshInstance3D] = []
 var _props: Array[MultiMeshInstance3D] = []
 var _props_chunk := Vector2i(1 << 30, 0)
@@ -86,6 +88,11 @@ func setup(p_stage: StageData) -> void:
 	chest.color_c = Color(0.3, 0.25, 0.2)
 	chest.aspect = 1.1
 	_chests = _prop_multimesh(chest)
+	var stone := PropData.new()
+	stone.shape = PropData.Shape.HOLY_STONE
+	stone.color_b = Color(0.62, 0.6, 0.7)
+	stone.aspect = 0.8
+	_stones = _prop_multimesh(stone)
 	for c in [stage.mountain_far_color, stage.mountain_color]:
 		var m := PropData.new()
 		m.shape = PropData.Shape.MOUNTAIN
@@ -124,6 +131,7 @@ func render(delta: float) -> void:
 	_render_shots()
 	_render_gems()
 	_render_chests()
+	_render_stones()
 	for s in hazards.slams_now:
 		_effects.append([to_3d(s[0], _h(s[0]) + 0.03), s[1] / PX, 0.35, 0.35, Color(1, 0.9, 0.8)])
 	_render_rings(delta)
@@ -404,6 +412,18 @@ func _render_chests() -> void:
 		mm.set_instance_custom_data(i, Color(1, 0, 0, 0))
 
 
+func _render_stones() -> void:
+	var mm := _stones.multimesh
+	var n := stones.pos.size()
+	_ensure_capacity(mm, n)
+	for i in n:
+		var p := stones.pos[i]
+		var c := stones.color_of(i)
+		var glow := c.lightened(0.3 * stones.charge[i] + 0.2 * sin(Time.get_ticks_msec() * 0.006))
+		mm.set_instance_transform(i, Transform3D(Basis.from_scale(Vector3(1.8, 1.8, 1.8)), to_3d(p, _h(p))))
+		mm.set_instance_custom_data(i, Color(0.5, glow.r, glow.g, glow.b))
+
+
 ## Anillos en el piso: aura de Fire Wall, avisos de golpe de jefe (se llenan) y efectos.
 func _render_rings(delta: float) -> void:
 	var mm := _rings.multimesh
@@ -417,6 +437,12 @@ func _render_rings(delta: float) -> void:
 		var at := to_3d(p, _h(p) + 0.03)
 		rings.append([at, hazards.warn_radius[k] / PX, Color(1, 0.2, 0.15, 0.5)])
 		rings.append([at, hazards.warn_radius[k] / PX * t, Color(1, 0.35, 0.2, 0.9)])
+	for i in stones.pos.size():
+		var at := to_3d(stones.pos[i], _h(stones.pos[i]) + 0.03)
+		var r := HolyStones.RADIUS / PX
+		rings.append([at, r, Color(stones.color_of(i), 0.45)])
+		if stones.charge[i] > 0.0:
+			rings.append([at, r * stones.charge[i], Color(stones.color_of(i), 0.9)])
 	for e in _effects:
 		e[2] -= delta
 		var t: float = 1.0 - e[2] / e[3]

@@ -4,16 +4,18 @@ shader_type spatial;
 // INSTANCE_CUSTOM.r = variante (0..1) para cambiar colores/forma entre instancias.
 render_mode unshaded, cull_disabled;
 
-uniform int shape = 0; // 0 árbol, 1 palmera, 2 roca, 3 cabina, 4 flor, 5 caracola, 6 arbusto, 7 montaña, 8 pasto, 9 cofre
+uniform int shape = 0; // 0 árbol, 1 palmera, 2 roca, 3 cabina, 4 flor, 5 caracola, 6 arbusto, 7 montaña, 8 pasto, 9 cofre, 10 piedra sagrada
 uniform vec3 color_a : source_color = vec3(0.3, 0.62, 0.3);
 uniform vec3 color_b : source_color = vec3(0.55, 0.36, 0.2);
 uniform vec3 color_c : source_color = vec3(0.9, 0.9, 0.95);
 uniform float border = 0.035;
 
 varying flat float v_var;
+varying flat vec3 v_glow;
 
 void vertex() {
 	v_var = INSTANCE_CUSTOM.r;
+	v_glow = INSTANCE_CUSTOM.gba;
 	vec3 scale = vec3(length(MODEL_MATRIX[0].xyz), length(MODEL_MATRIX[1].xyz), length(MODEL_MATRIX[2].xyz));
 	vec3 right = normalize(cross(vec3(0.0, 1.0, 0.0), INV_VIEW_MATRIX[2].xyz));
 	vec3 fwd = normalize(cross(right, vec3(0.0, 1.0, 0.0)));
@@ -96,6 +98,12 @@ void fragment() {
 			g = min(g, sd_tri(p, vec2(x - 0.08, 0.0), vec2(x + 0.08, 0.0), vec2(x + 0.05 * sin(float(i) * 2.0), 0.7 + 0.25 * fract(float(i) * 0.61))));
 		}
 		d = g; d2 = g; col_part = color_a;
+	} else if (shape == 10) {
+		// piedra sagrada: monolito redondeado con el emblema que brilla (color por instancia en INSTANCE_CUSTOM.g..)
+		float stone = sd_box(p, vec2(0.0, 0.42), vec2(0.26, 0.38)) - 0.1;
+		float crest = abs(sd_circle(p, vec2(0.0, 0.55), 0.12)) - 0.03;
+		d = stone; d2 = 1e3; col_main = color_b;
+		if (crest < 0.0) { d2 = -1.0; col_part = v_glow; }
 	} else {
 		// cofre: caja con tapa y cerradura
 		float box = sd_box(p, vec2(0.0, 0.28), vec2(0.38, 0.28)) - 0.03;

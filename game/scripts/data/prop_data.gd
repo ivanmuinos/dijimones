@@ -3,7 +3,7 @@ extends Resource
 ## Decorado de papel de un mapa (árboles, palmeras, rocas, cabinas de teléfono...).
 ## Se reparte por chunks de forma determinística, así cada mapa se ve igual en cada run.
 
-enum Shape { TREE, PALM, ROCK, PHONE_BOOTH, FLOWER, SHELL, BUSH, MOUNTAIN, GRASS, CHEST }
+enum Shape { TREE, PALM, ROCK, PHONE_BOOTH, FLOWER, SHELL, BUSH, MOUNTAIN, GRASS, CHEST, HOLY_STONE }
 
 @export var shape := Shape.TREE
 @export var color_a := Color(0.3, 0.62, 0.3)
