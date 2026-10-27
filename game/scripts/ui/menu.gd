@@ -1,117 +1,269 @@
 extends Control
 ## Menú principal: nombre del tamer, Digimon compañero, modo, salas online (crear / unirse con código)
-## y ranking del modo elegido. Guarda la elección en Session.
+## y ranking del modo elegido. Hecho con Controls reales y el estilo de UIStyle.
 
-const PAPER := Color(0.98, 0.96, 0.9)
-const INK := Color(0.12, 0.1, 0.14)
-const CARD := Vector2(130, 158)
-const SIDE := 104.0
-
-var _name_edit := LineEdit.new()
-var _selected := 0
-var _cards: Array[Rect2] = []
-var _sprites: Array[AnimatedSprite2D] = []
-var _font := ThemeDB.fallback_font
-var _play_rect := Rect2()
-var _mode_rects: Array[Rect2] = []
-var _code_edit := LineEdit.new()
-var _host_rect := Rect2()
-var _join_rect := Rect2()
-var _leave_rect := Rect2()
-var _ranking: Array = []
-var _ranking_mode := ""
-var _error := ""
 const MODES := [["clasico", "Clásico", "15 min · 4 jefes"], ["supervivencia", "Supervivencia", "Infinito · hitos cada 5 min"]]
+const CARD := Vector2(136, 168)
+const SIDE := 128.0
+
+var _selected := 0
+var _name_edit := LineEdit.new()
+var _cards: Array[Button] = []
+var _sprites: Array[AnimatedSprite2D] = []
+var _mode_buttons: Array[Button] = []
+var _play := Button.new()
+var _error := Label.new()
+# online
+var _online_panel := PanelContainer.new()
+var _offline_box := VBoxContainer.new()
+var _lobby_box := VBoxContainer.new()
+var _code_edit := LineEdit.new()
+var _room_label := Label.new()
+var _players_label := Label.new()
+var _status_label := Label.new()
+# ranking
+var _ranking_panel := PanelContainer.new()
+var _ranking_rows := VBoxContainer.new()
+var _ranking_title := Label.new()
+var _ranking_mode := ""
 
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
+	theme = UIStyle.theme()
 	Music.play("menu")
 	_selected = maxi(Session.CHARACTERS.find(Session.character), 0)
+	_build()
+	Net.lobby_changed.connect(_refresh_online)
+	Net.room_error.connect(func(msg): _show_error(msg))
+	Net.leaderboard_loaded.connect(_fill_ranking)
+	resized.connect(_layout)
+	_layout()
+	_refresh_online()
+
+
+# --- construcción --------------------------------------------------------------------------------
+
+func _build() -> void:
 	_name_edit.text = Session.player_name
 	_name_edit.max_length = 14
-	_name_edit.placeholder_text = "Tu nombre"
+	_name_edit.placeholder_text = "Tu nombre de tamer"
 	_name_edit.alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_name_edit.add_theme_font_size_override("font_size", 12)
 	add_child(_name_edit)
-	_code_edit.max_length = 4
-	_code_edit.placeholder_text = "CÓDIGO"
-	_code_edit.alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_code_edit.add_theme_font_size_override("font_size", 11)
-	add_child(_code_edit)
-	Net.lobby_changed.connect(queue_redraw)
-	Net.room_error.connect(func(msg): _error = msg)
-	Net.leaderboard_loaded.connect(func(rows): _ranking = rows)
-	for c in Session.CHARACTERS:
+
+	var group := ButtonGroup.new()
+	for i in Session.CHARACTERS.size():
+		var c: CharacterData = Session.CHARACTERS[i]
+		var b := Button.new()
+		b.toggle_mode = true
+		b.button_group = group
+		b.button_pressed = i == _selected
+		b.focus_mode = Control.FOCUS_NONE
+		var normal := UIStyle.panel(UIStyle.BG, 14)
+		var hover := UIStyle.panel(UIStyle.BG.lightened(0.08), 14, Color(1, 1, 1, 0.2))
+		var sel := UIStyle.panel(Color(0.16, 0.12, 0.08, 0.92), 14, UIStyle.ACCENT)
+		sel.set_border_width_all(2)
+		b.add_theme_stylebox_override("normal", normal)
+		b.add_theme_stylebox_override("hover", hover)
+		b.add_theme_stylebox_override("pressed", sel)
+		b.add_theme_stylebox_override("hover_pressed", sel)
+		b.pressed.connect(func(): _selected = i)
+		add_child(b)
+		_cards.append(b)
 		var s := AnimatedSprite2D.new()
 		s.sprite_frames = DigimonDB.sprite_frames(c.line[1])
 		s.play("idle")
 		s.centered = false
 		s.scale = Vector2(1.6, 1.6)
-		add_child(s)
+		s.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		b.add_child(s)
 		_sprites.append(s)
-	resized.connect(_layout)
-	_layout()
+		var info := VBoxContainer.new()
+		info.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		info.position = Vector2(9, 76)
+		info.size = Vector2(CARD.x - 18, CARD.y - 80)
+		info.add_theme_constant_override("separation", 1)
+		b.add_child(info)
+		info.add_child(_label(c.display_name, 14, UIStyle.TEXT, true))
+		var line := _label(" › ".join(c.line), 7, UIStyle.MUTED)
+		line.clip_text = true
+		line.custom_minimum_size.x = CARD.x - 18
+		info.add_child(line)
+		info.add_child(_label("Vida %d · Velocidad %d" % [c.max_hp, c.speed], 9, UIStyle.TEXT))
+		info.add_child(_label(c.starting_weapon.display_name, 10, UIStyle.ACCENT, true))
+		var d := _label(c.description, 7, UIStyle.MUTED)
+		d.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		d.custom_minimum_size.x = CARD.x - 18
+		d.max_lines_visible = 2
+		info.add_child(d)
+
+	var mode_group := ButtonGroup.new()
+	for k in MODES.size():
+		var m := Button.new()
+		m.toggle_mode = true
+		m.button_group = mode_group
+		m.button_pressed = Session.mode == MODES[k][0]
+		m.focus_mode = Control.FOCUS_NONE
+		m.text = "%s\n%s" % [MODES[k][1], MODES[k][2]]
+		m.add_theme_font_size_override("font_size", 9)
+		var on := UIStyle.panel(UIStyle.ACCENT_2, 9, Color(1, 1, 1, 0.3))
+		m.add_theme_stylebox_override("normal", UIStyle.panel(UIStyle.BG, 9))
+		m.add_theme_stylebox_override("hover", UIStyle.panel(UIStyle.BG.lightened(0.1), 9))
+		m.add_theme_stylebox_override("pressed", on)
+		m.add_theme_stylebox_override("hover_pressed", on)
+		m.pressed.connect(func(): Session.mode = MODES[k][0])
+		add_child(m)
+		_mode_buttons.append(m)
+
+	_play.text = "¡JUGAR!"
+	_play.focus_mode = Control.FOCUS_NONE
+	UIStyle.style_button(_play, UIStyle.ACCENT, 18)
+	_play.pressed.connect(_start)
+	add_child(_play)
+
+	_error.add_theme_color_override("font_color", UIStyle.BAD)
+	_error.add_theme_font_size_override("font_size", 10)
+	_error.add_theme_font_override("font", UIStyle.font_bold())
+	_error.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	add_child(_error)
+
+	# panel online
+	add_child(_online_panel)
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 5)
+	_online_panel.add_child(box)
+	box.add_child(_label("Jugar online", 13, UIStyle.TEXT, true))
+	box.add_child(_offline_box)
+	box.add_child(_lobby_box)
+	_offline_box.add_theme_constant_override("separation", 5)
+	var host := Button.new()
+	host.text = "Crear sala"
+	host.pressed.connect(func(): _online(true))
+	_offline_box.add_child(host)
+	_offline_box.add_child(_label("o unite con un código", 8, UIStyle.MUTED))
+	_code_edit.max_length = 4
+	_code_edit.placeholder_text = "CÓDIGO"
+	_code_edit.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_code_edit.text_submitted.connect(func(_t): _online(false))
+	_offline_box.add_child(_code_edit)
+	var join := Button.new()
+	join.text = "Unirse"
+	UIStyle.style_button(join, UIStyle.GOOD.darkened(0.2), 12)
+	join.pressed.connect(func(): _online(false))
+	_offline_box.add_child(join)
+	_offline_box.add_child(_label("Hasta 4 · XP compartida", 7, UIStyle.MUTED))
+	_lobby_box.add_theme_constant_override("separation", 4)
+	_lobby_box.add_child(_label("Código de la sala", 8, UIStyle.MUTED))
+	_room_label.add_theme_font_override("font", UIStyle.font_bold())
+	_room_label.add_theme_font_size_override("font_size", 24)
+	_room_label.add_theme_color_override("font_color", UIStyle.ACCENT)
+	_room_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_lobby_box.add_child(_room_label)
+	_players_label.add_theme_font_size_override("font_size", 9)
+	_lobby_box.add_child(_players_label)
+	_status_label.add_theme_font_size_override("font_size", 8)
+	_status_label.add_theme_color_override("font_color", UIStyle.MUTED)
+	_status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_status_label.custom_minimum_size.x = SIDE - 16
+	_lobby_box.add_child(_status_label)
+	var leave := Button.new()
+	leave.text = "Salir de la sala"
+	UIStyle.style_button(leave, UIStyle.BAD.darkened(0.25), 10)
+	leave.pressed.connect(func():
+		Net.leave()
+		_refresh_online())
+	_lobby_box.add_child(leave)
+
+	# ranking
+	add_child(_ranking_panel)
+	var rbox := VBoxContainer.new()
+	rbox.add_theme_constant_override("separation", 4)
+	_ranking_panel.add_child(rbox)
+	_ranking_title.add_theme_font_override("font", UIStyle.font_bold())
+	_ranking_title.add_theme_font_size_override("font_size", 12)
+	rbox.add_child(_ranking_title)
+	rbox.add_child(_ranking_rows)
+
+	var controls := _label("WASD mover · Espacio saltar · R especial · Q/E zoom · 1/2/3 mejoras · M música · Tab modo", 8, Color(1, 1, 1, 0.85))
+	controls.name = "Controles"
+	controls.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	add_child(controls)
+
+
+func _label(text: String, size_px: int, color: Color, bold := false) -> Label:
+	var l := Label.new()
+	l.text = text
+	l.add_theme_font_size_override("font_size", size_px)
+	l.add_theme_color_override("font_color", color)
+	if bold:
+		l.add_theme_font_override("font", UIStyle.font_bold())
+	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return l
 
 
 func _layout() -> void:
-	_name_edit.size = Vector2(160, 22)
-	_name_edit.position = Vector2((size.x - 160) / 2, 92)
-	_cards.clear()
-	var n := Session.CHARACTERS.size()
-	var gap := 14.0
-	var x := (size.x - (n * CARD.x + (n - 1) * gap)) / 2
+	var w := size.x
+	_name_edit.size = Vector2(170, 22)
+	_name_edit.position = Vector2((w - 170) / 2, 76)
+	var n := _cards.size()
+	var gap := 12.0
+	var x := (w - (n * CARD.x + (n - 1) * gap)) / 2
 	for i in n:
-		var r := Rect2(x + i * (CARD.x + gap), 132, CARD.x, CARD.y)
-		_cards.append(r)
+		_cards[i].position = Vector2(x + i * (CARD.x + gap), 106)
+		_cards[i].size = CARD
 		var info := DigimonDB.species(Session.CHARACTERS[i].line[1])
 		var anchor: Vector2 = info["anchor"]
-		_sprites[i].position = Vector2(r.get_center().x, r.position.y + 80) - anchor * _sprites[i].scale
-	_play_rect = Rect2((size.x - 140) / 2, size.y - 44, 140, 30)
-	var left := Rect2(8, 132, SIDE, CARD.y)
-	_host_rect = Rect2(left.position + Vector2(6, 22), Vector2(SIDE - 12, 20))
-	_code_edit.position = left.position + Vector2(6, 64)
-	_code_edit.size = Vector2(SIDE - 12, 20)
-	_join_rect = Rect2(left.position + Vector2(6, 88), Vector2(SIDE - 12, 20))
-	_leave_rect = Rect2(left.position + Vector2(6, CARD.y - 26), Vector2(SIDE - 12, 20))
-	_mode_rects.clear()
-	for k in MODES.size():
-		_mode_rects.append(Rect2(size.x / 2 - 210 + k * 330, size.y - 44, 90, 30))
-	queue_redraw()
+		_sprites[i].position = Vector2(CARD.x / 2, 72) - anchor * _sprites[i].scale
+	_online_panel.position = Vector2(x - SIDE - 14, 106)
+	_online_panel.size = Vector2(SIDE, CARD.y)
+	_ranking_panel.position = Vector2(x + n * CARD.x + (n - 1) * gap + 14, 106)
+	_ranking_panel.size = Vector2(SIDE, CARD.y)
+	var bottom := size.y - 50
+	_play.size = Vector2(150, 36)
+	_play.position = Vector2((w - 150) / 2, bottom)
+	for k in _mode_buttons.size():
+		_mode_buttons[k].size = Vector2(118, 36)
+		_mode_buttons[k].position = Vector2(w / 2 - 75 - 128 if k == 0 else w / 2 + 75 + 10, bottom)
+	_error.position = Vector2(0, 278)
+	_error.size = Vector2(w, 14)
+	var controls: Label = get_node("Controles")
+	controls.position = Vector2(0, size.y - 13)
+	controls.size = Vector2(w, 12)
 
+
+# --- comportamiento ------------------------------------------------------------------------------
 
 func _process(_delta: float) -> void:
-	_code_edit.visible = not Net.online
 	if _ranking_mode != Session.mode:
 		_ranking_mode = Session.mode
-		_ranking = []
+		_ranking_title.text = "Ranking · %s" % ("Clásico" if Session.mode == "clasico" else "Supervivencia")
+		_fill_ranking([])
 		Net.load_leaderboard(Session.mode)
+	for k in _mode_buttons.size():
+		_mode_buttons[k].set_pressed_no_signal(Session.mode == MODES[k][0])
+	_play.text = "¡JUGAR!" if not Net.online else ("¡EMPEZAR!" if Net.is_host else "Esperando al host…")
+	_play.disabled = Net.online and not Net.is_host
 	queue_redraw()
-
-
-func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		for i in _cards.size():
-			if _cards[i].has_point(event.position):
-				_selected = i
-		for k in _mode_rects.size():
-			if _mode_rects[k].has_point(event.position):
-				Session.mode = MODES[k][0]
-		if _play_rect.has_point(event.position):
-			_start()
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
+		if _name_edit.has_focus() or _code_edit.has_focus():
+			return
 		match event.keycode:
 			KEY_LEFT, KEY_A:
-				_selected = posmod(_selected - 1, _cards.size())
+				_select(posmod(_selected - 1, _cards.size()))
 			KEY_RIGHT, KEY_D:
-				_selected = posmod(_selected + 1, _cards.size())
+				_select(posmod(_selected + 1, _cards.size()))
 			KEY_TAB:
 				Session.mode = "supervivencia" if Session.mode == "clasico" else "clasico"
 			KEY_ENTER, KEY_KP_ENTER:
 				_start()
+
+
+func _select(i: int) -> void:
+	_selected = i
+	_cards[i].button_pressed = true
 
 
 func _save_choice() -> void:
@@ -131,9 +283,9 @@ func _start() -> void:
 
 
 func _online(host: bool) -> void:
-	_error = ""
+	_show_error("")
 	if not Net.webrtc_available():
-		_error = "El online funciona en el navegador (dijimones.pages.dev)"
+		_show_error("El online funciona en el navegador (dijimones.pages.dev)")
 		return
 	_save_choice()
 	if host:
@@ -141,117 +293,71 @@ func _online(host: bool) -> void:
 	elif _code_edit.text.strip_edges().length() == 4:
 		Net.join_room(_code_edit.text)
 	else:
-		_error = "Poné el código de 4 letras"
+		_show_error("Poné el código de 4 letras de la sala")
+	_refresh_online()
+
+
+func _show_error(msg: String) -> void:
+	_error.text = msg
+
+
+func _refresh_online() -> void:
+	_offline_box.visible = not Net.online
+	_lobby_box.visible = Net.online
+	_room_label.text = Net.room
+	var lines := []
+	for peer_id in Net.players:
+		var pl: Dictionary = Net.players[peer_id]
+		lines.append("%s · %s%s" % [pl["name"], str(pl["character"]).capitalize(), "  (host)" if int(peer_id) == 1 else ""])
+	_players_label.text = "\n".join(lines)
+	_status_label.text = Net.status
+	# los PanelContainer crecen con el contenido pero no se achican solos
+	for p in [_online_panel, _ranking_panel]:
+		p.reset_size()
+		p.size = Vector2(SIDE, CARD.y)
+
+
+func _fill_ranking(rows: Array) -> void:
+	_ranking_panel.reset_size()
+	_ranking_panel.size = Vector2(SIDE, CARD.y)
+	for c in _ranking_rows.get_children():
+		c.queue_free()
+	if rows.is_empty():
+		_ranking_rows.add_child(_label("¡Sé el primero!", 9, UIStyle.MUTED))
+		return
+	for k in mini(rows.size(), 10):
+		var row: Dictionary = rows[k]
+		var secs := int(row.get("seconds", 0))
+		var color := UIStyle.ACCENT if k == 0 else (UIStyle.TEXT if k < 3 else UIStyle.MUTED)
+		_ranking_rows.add_child(_label("%d. %s  %d:%02d" % [k + 1, str(row.get("name", "?")).substr(0, 10), secs / 60, secs % 60], 9, color, k < 3))
 
 
 func _draw() -> void:
-	# fondo: cielo y pasto de papel
-	draw_rect(Rect2(Vector2.ZERO, size), Color(0.74, 0.88, 0.97))
-	draw_rect(Rect2(0, size.y * 0.62, size.x, size.y * 0.38), Color(0.5, 0.75, 0.4))
-	draw_rect(Rect2(0, size.y * 0.62, size.x, 3), PAPER)
+	# fondo: cielo en degradé y colinas de papel que se mueven despacio
+	var w := size.x
+	var h := size.y
+	for k in 12:
+		draw_rect(Rect2(0, k * h / 12.0, w, h / 12.0 + 1), Color(0.36, 0.62, 0.95).lerp(Color(0.8, 0.92, 1.0), k / 12.0))
+	var t := Time.get_ticks_msec() * 0.0002
+	var colors := [Color(0.58, 0.8, 0.52), Color(0.46, 0.71, 0.43), Color(0.36, 0.6, 0.36)]
+	for layer in 3:
+		var pts := PackedVector2Array([Vector2(0, h)])
+		var base := h * (0.6 + layer * 0.09)
+		for k in 41:
+			var x := w * k / 40.0
+			pts.append(Vector2(x, base - 16 * sin(k * 0.45 + layer * 1.7 + t * (layer + 1)) - 8 * sin(k * 1.2 + layer)))
+		pts.append(Vector2(w, h))
+		draw_colored_polygon(pts, colors[layer])
+		draw_polyline(pts.slice(1, pts.size() - 1), Color(1, 1, 1, 0.55), 2.0, true)
 	# título
-	var t := "DIJIMONES"
-	var fs := 40
-	var tw := _font.get_string_size(t, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
-	var tp := Vector2((size.x - tw) / 2, 56)
-	draw_string_outline(_font, tp + Vector2(3, 3), t, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, 10, Color(0, 0, 0, 0.3))
-	draw_string_outline(_font, tp, t, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, 10, PAPER)
-	draw_string(_font, tp, t, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color(1, 0.55, 0.15))
-	_center("Sobreviví en el Digital World", 74, 11, INK)
-	_center("Nombre del tamer", 88, 9, INK)
-	# tarjetas de Digimon
-	for i in _cards.size():
-		var r := _cards[i]
-		var c: CharacterData = Session.CHARACTERS[i]
-		var sel := i == _selected
-		draw_rect(Rect2(r.position + Vector2(3, 3), r.size), Color(0, 0, 0, 0.3))
-		draw_rect(r, PAPER if not sel else Color(1, 0.95, 0.75))
-		if sel:
-			draw_rect(r.grow(2), Color(1, 0.6, 0.15), false, 3.0)
-		_center(c.display_name, r.position.y + 94, 14, INK, r)
-		_center(" > ".join(c.line), r.position.y + 108, 8, Color(0.4, 0.35, 0.5), r)
-		_center("Vida %d · Vel %d" % [c.max_hp, c.speed], r.position.y + 121, 8, Color(0.4, 0.35, 0.5), r)
-		_center(c.starting_weapon.display_name, r.position.y + 133, 9, Color(0.75, 0.35, 0.1), r)
-		draw_multiline_string(_font, Vector2(r.position.x + 6, r.position.y + 143), c.description,
-			HORIZONTAL_ALIGNMENT_CENTER, r.size.x - 12, 7, 2, Color(0.35, 0.3, 0.35))
-	# modo de juego
-	for k in _mode_rects.size():
-		var r := _mode_rects[k]
-		var sel: bool = Session.mode == MODES[k][0]
-		draw_rect(Rect2(r.position + Vector2(2, 2), r.size), Color(0, 0, 0, 0.3))
-		draw_rect(r, Color(0.35, 0.55, 0.95) if sel else PAPER)
-		_center(MODES[k][1], r.position.y + 13, 10, Color.WHITE if sel else INK, r)
-		_center(MODES[k][2], r.position.y + 25, 7, Color(1, 1, 1, 0.85) if sel else Color(0.4, 0.35, 0.5), r)
-	_draw_online()
-	_draw_ranking()
-	if _error != "":
-		_center(_error, 124, 9, Color(0.85, 0.15, 0.1))
-	# botón jugar
-	var pulse := 0.85 + 0.15 * sin(Time.get_ticks_msec() * 0.006)
-	draw_rect(Rect2(_play_rect.position + Vector2(3, 3), _play_rect.size), Color(0, 0, 0, 0.3))
-	draw_rect(_play_rect, Color(1, 0.6, 0.15) * pulse)
-	draw_rect(_play_rect, PAPER, false, 2.0)
-	var play_text := "¡JUGAR!"
-	if Net.online:
-		play_text = "¡EMPEZAR!" if Net.is_host else "Esperando…"
-	_center(play_text, _play_rect.position.y + 21, 16, Color.WHITE)
-	_center("Mover: WASD/flechas · Saltar: Espacio · Especial: R · Zoom: rueda o Q/E · Mejoras: 1/2/3 · Música: M · Modo: Tab",
-		size.y - 6, 8, Color(0.1, 0.25, 0.1))
-
-
-## Panel online a la izquierda: crear sala / unirse con código, o el lobby si ya estás en una.
-func _draw_online() -> void:
-	var r := Rect2(8, 132, SIDE, CARD.y)
-	_panel(r)
-	_center("Jugar online", r.position.y + 14, 10, INK, r)
-	if not Net.online:
-		_button(_host_rect, "Crear sala", Color(0.35, 0.55, 0.95))
-		_center("o unite con un código:", r.position.y + 58, 7, Color(0.4, 0.35, 0.5), r)
-		_button(_join_rect, "Unirse", Color(0.35, 0.7, 0.4))
-		draw_multiline_string(_font, r.position + Vector2(6, 124), "Hasta 4 jugadores. XP compartida, revivís a tus amigos.",
-			HORIZONTAL_ALIGNMENT_CENTER, SIDE - 12, 7, 3, Color(0.4, 0.35, 0.5))
-		return
-	_center("Sala", r.position.y + 30, 8, Color(0.4, 0.35, 0.5), r)
-	_center(Net.room, r.position.y + 50, 20, Color(0.85, 0.4, 0.1), r)
-	var y := r.position.y + 66
-	for peer_id in Net.players:
-		var pl: Dictionary = Net.players[peer_id]
-		_center("%s%s (%s)" % ["★ " if int(peer_id) == 1 else "", pl["name"], pl["character"]], y, 8, INK, r)
-		y += 11
-	draw_multiline_string(_font, Vector2(r.position.x + 6, r.end.y - 40), Net.status, HORIZONTAL_ALIGNMENT_CENTER, SIDE - 12, 7, 2, Color(0.4, 0.35, 0.5))
-	_button(_leave_rect, "Salir de la sala", Color(0.75, 0.3, 0.3))
-
-
-## Ranking (Supabase) del modo elegido a la derecha.
-func _draw_ranking() -> void:
-	var r := Rect2(size.x - SIDE - 8, 132, SIDE, CARD.y)
-	_panel(r)
-	_center("Ranking · %s" % ("Clásico" if Session.mode == "clasico" else "Superviv."), r.position.y + 14, 9, INK, r)
-	if _ranking.is_empty():
-		_center("¡Sé el primero!", r.position.y + 40, 8, Color(0.4, 0.35, 0.5), r)
-		return
-	var y := r.position.y + 28
-	for k in mini(_ranking.size(), 10):
-		var row: Dictionary = _ranking[k]
-		var secs := int(row.get("seconds", 0))
-		var line := "%d. %s %d:%02d" % [k + 1, str(row.get("name", "?")).substr(0, 9), secs / 60, secs % 60]
-		draw_string(_font, Vector2(r.position.x + 6, y), line, HORIZONTAL_ALIGNMENT_LEFT, SIDE - 10, 8,
-			Color(0.75, 0.45, 0.05) if k == 0 else INK)
-		y += 12
-
-
-func _panel(r: Rect2) -> void:
-	draw_rect(Rect2(r.position + Vector2(3, 3), r.size), Color(0, 0, 0, 0.3))
-	draw_rect(r, PAPER)
-
-
-func _button(r: Rect2, text: String, color: Color) -> void:
-	draw_rect(Rect2(r.position + Vector2(2, 2), r.size), Color(0, 0, 0, 0.3))
-	draw_rect(r, color)
-	_center(text, r.position.y + 14, 10, Color.WHITE, r)
-
-
-func _center(text: String, y: float, font_size: int, color: Color, within := Rect2()) -> void:
-	var area := within if within.size != Vector2.ZERO else Rect2(0, 0, size.x, size.y)
-	var tw := _font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, area.size.x - 6, font_size).x
-	draw_string(_font, Vector2(area.position.x + (area.size.x - tw) / 2, y), text, HORIZONTAL_ALIGNMENT_LEFT, area.size.x - 6, font_size, color)
+	var title := "DIJIMONES"
+	var f := UIStyle.font_bold()
+	var fs := 44
+	var tw := f.get_string_size(title, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+	var tp := Vector2((w - tw) / 2, 48)
+	draw_string_outline(f, tp + Vector2(0, 4), title, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, 12, Color(0, 0, 0, 0.25))
+	draw_string_outline(f, tp, title, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, 10, Color.WHITE)
+	draw_string(f, tp, title, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, UIStyle.ACCENT)
+	var sub := "Sobreviví en el Digital World"
+	var sw := UIStyle.font().get_string_size(sub, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
+	draw_string(UIStyle.font(), Vector2((w - sw) / 2, 66), sub, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color(0.08, 0.16, 0.32))

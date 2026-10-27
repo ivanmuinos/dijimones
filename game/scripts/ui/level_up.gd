@@ -98,25 +98,40 @@ func _draw() -> void:
 	_cards.clear()
 	if not is_open():
 		return
-	var w := 170.0
-	var h := 38.0
-	var x := size.x - w - 8
-	var y := 40.0
-	draw_string(_font, Vector2(x, y - 6), "¡Subiste de nivel! (%.0f)" % ceilf(_time_left),
-		HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color(1, 0.95, 0.5))
+	var w := 200.0
+	var h := 46.0
+	var x := size.x - w - 10
+	var y := 60.0
+	var bold := UIStyle.font_bold()
+	var header := Rect2(x, y - 26, w, 22)
+	draw_style_box(UIStyle.panel(UIStyle.ACCENT, 8, Color(1, 1, 1, 0.25), 6), header)
+	draw_string(bold, header.position + Vector2(10, 15), "¡Subiste de nivel!", HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color.WHITE)
+	var secs := "%ds" % ceili(_time_left)
+	draw_string(bold, header.position + Vector2(w - 10 - bold.get_string_size(secs, 0, -1, 10).x, 15), secs, HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(1, 1, 1, 0.85))
 	for i in _options.size():
-		var r := Rect2(x, y + i * (h + 4), w, h)
+		var r := Rect2(x, y + i * (h + 6), w, h)
 		_cards.append(r)
-		draw_rect(r, Color(0.08, 0.1, 0.2, 0.9))
-		draw_rect(r, Color(0.5, 0.7, 1.0), false, 1.0)
 		var o: Dictionary = _options[i]
-		var title := "Curar +30 HP"
-		var desc := ""
+		var color := UIStyle.GOOD
+		var title := "Curar +30 de vida"
+		var desc := "No quedan mejoras disponibles"
+		var is_new := false
 		if not o.is_empty():
 			var item = o["item"]
-			title = "%s  Nv %d" % [item.display_name, o["level"]]
-			if o["level"] == 1:
-				title = "NUEVO: " + item.display_name
+			color = item.color if item is WeaponData else Color(0.55, 0.62, 0.85)
+			title = item.display_name
 			desc = item.description
-		draw_string(_font, r.position + Vector2(6, 14), "%d. %s" % [i + 1, title], HORIZONTAL_ALIGNMENT_LEFT, w - 10, 11)
-		draw_string(_font, r.position + Vector2(6, 29), desc, HORIZONTAL_ALIGNMENT_LEFT, w - 10, 9, Color(0.75, 0.8, 0.9))
+			is_new = o["level"] == 1
+		draw_style_box(UIStyle.panel(UIStyle.BG_SOLID, 10, Color(color, 0.6), 8), r)
+		# ícono redondo con la tecla
+		var ic := r.position + Vector2(20, h / 2)
+		draw_circle(ic, 13, color.darkened(0.2))
+		draw_string(bold, ic + Vector2(-4, 5), str(i + 1), HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color.WHITE)
+		draw_string(bold, r.position + Vector2(40, 17), title, HORIZONTAL_ALIGNMENT_LEFT, w - 50, 11, UIStyle.TEXT)
+		var tag := "NUEVO" if is_new else ("Nv %d" % o["level"] if not o.is_empty() else "")
+		if tag != "":
+			var tw := bold.get_string_size(tag, 0, -1, 8).x
+			var tr := Rect2(r.end.x - tw - 16, r.position.y + 7, tw + 10, 13)
+			draw_style_box(UIStyle.panel(UIStyle.ACCENT if is_new else Color(1, 1, 1, 0.12), 6, Color(0, 0, 0, 0), 0), tr)
+			draw_string(bold, tr.position + Vector2(5, 10), tag, HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color.WHITE)
+		draw_string(UIStyle.font(), r.position + Vector2(40, 33), desc, HORIZONTAL_ALIGNMENT_LEFT, w - 50, 9, UIStyle.MUTED)
