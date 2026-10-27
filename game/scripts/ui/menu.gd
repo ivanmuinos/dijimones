@@ -5,8 +5,13 @@ extends Control
 const MODES := [["clasico", "Clásico", "15 min · 4 jefes"], ["supervivencia", "Supervivencia", "Infinito · hitos cada 5 min"]]
 const CARD := Vector2(136, 168)
 const SIDE := 128.0
+## Lienzo de diseño del menú: se escala para entrar entero en cualquier ventana (responsive).
+const DESIGN := Vector2(760, 372)
 
 var _selected := 0
+var _content := Control.new()
+var _title := Label.new()
+var _subtitle := Label.new()
 var _name_edit := LineEdit.new()
 var _cards: Array[Button] = []
 var _sprites: Array[AnimatedSprite2D] = []
@@ -45,11 +50,28 @@ func _ready() -> void:
 # --- construcción --------------------------------------------------------------------------------
 
 func _build() -> void:
+	add_child(_content)
+	_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_title.text = "DIJIMONES"
+	_title.add_theme_font_override("font", UIStyle.font_bold())
+	_title.add_theme_font_size_override("font_size", 46)
+	_title.add_theme_color_override("font_color", UIStyle.ACCENT)
+	_title.add_theme_color_override("font_outline_color", Color.WHITE)
+	_title.add_theme_constant_override("outline_size", 12)
+	_title.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.25))
+	_title.add_theme_constant_override("shadow_offset_y", 4)
+	_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_content.add_child(_title)
+	_subtitle.text = "Sobreviví en el Digital World"
+	_subtitle.add_theme_font_size_override("font_size", 11)
+	_subtitle.add_theme_color_override("font_color", Color(0.08, 0.16, 0.32))
+	_subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_content.add_child(_subtitle)
 	_name_edit.text = Session.player_name
 	_name_edit.max_length = 14
 	_name_edit.placeholder_text = "Tu nombre de tamer"
 	_name_edit.alignment = HORIZONTAL_ALIGNMENT_CENTER
-	add_child(_name_edit)
+	_content.add_child(_name_edit)
 
 	var group := ButtonGroup.new()
 	for i in Session.CHARACTERS.size():
@@ -68,7 +90,7 @@ func _build() -> void:
 		b.add_theme_stylebox_override("pressed", sel)
 		b.add_theme_stylebox_override("hover_pressed", sel)
 		b.pressed.connect(func(): _selected = i)
-		add_child(b)
+		_content.add_child(b)
 		_cards.append(b)
 		var s := AnimatedSprite2D.new()
 		s.sprite_frames = DigimonDB.sprite_frames(c.line[1])
@@ -112,23 +134,23 @@ func _build() -> void:
 		m.add_theme_stylebox_override("pressed", on)
 		m.add_theme_stylebox_override("hover_pressed", on)
 		m.pressed.connect(func(): Session.mode = MODES[k][0])
-		add_child(m)
+		_content.add_child(m)
 		_mode_buttons.append(m)
 
 	_play.text = "¡JUGAR!"
 	_play.focus_mode = Control.FOCUS_NONE
 	UIStyle.style_button(_play, UIStyle.ACCENT, 18)
 	_play.pressed.connect(_start)
-	add_child(_play)
+	_content.add_child(_play)
 
 	_error.add_theme_color_override("font_color", UIStyle.BAD)
 	_error.add_theme_font_size_override("font_size", 10)
 	_error.add_theme_font_override("font", UIStyle.font_bold())
 	_error.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	add_child(_error)
+	_content.add_child(_error)
 
 	# panel online
-	add_child(_online_panel)
+	_content.add_child(_online_panel)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 5)
 	_online_panel.add_child(box)
@@ -175,7 +197,7 @@ func _build() -> void:
 	_lobby_box.add_child(leave)
 
 	# ranking
-	add_child(_ranking_panel)
+	_content.add_child(_ranking_panel)
 	var rbox := VBoxContainer.new()
 	rbox.add_theme_constant_override("separation", 4)
 	_ranking_panel.add_child(rbox)
@@ -187,7 +209,7 @@ func _build() -> void:
 	var controls := _label("WASD mover · Espacio saltar · R especial · Q/E zoom · 1/2/3 mejoras · M música · Tab modo", 8, Color(1, 1, 1, 0.85))
 	controls.name = "Controles"
 	controls.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	add_child(controls)
+	_content.add_child(controls)
 
 
 func _label(text: String, size_px: int, color: Color, bold := false) -> Label:
@@ -202,32 +224,42 @@ func _label(text: String, size_px: int, color: Color, bold := false) -> Label:
 
 
 func _layout() -> void:
-	var w := size.x
+	var w := DESIGN.x
+	var k := minf(size.x / DESIGN.x, size.y / DESIGN.y)
+	_content.size = DESIGN
+	_content.scale = Vector2(k, k)
+	_content.position = ((size - DESIGN * k) / 2).floor()
+	_title.position = Vector2(0, 0)
+	_title.size = Vector2(w, 60)
+	_subtitle.position = Vector2(0, 58)
+	_subtitle.size = Vector2(w, 16)
 	_name_edit.size = Vector2(170, 22)
-	_name_edit.position = Vector2((w - 170) / 2, 76)
+	_name_edit.position = Vector2((w - 170) / 2, 80)
 	var n := _cards.size()
 	var gap := 12.0
 	var x := (w - (n * CARD.x + (n - 1) * gap)) / 2
+	var top := 112.0
 	for i in n:
-		_cards[i].position = Vector2(x + i * (CARD.x + gap), 106)
+		_cards[i].position = Vector2(x + i * (CARD.x + gap), top)
 		_cards[i].size = CARD
 		var info := DigimonDB.species(Session.CHARACTERS[i].line[1])
 		var anchor: Vector2 = info["anchor"]
 		_sprites[i].position = Vector2(CARD.x / 2, 72) - anchor * _sprites[i].scale
-	_online_panel.position = Vector2(x - SIDE - 14, 106)
-	_online_panel.size = Vector2(SIDE, CARD.y)
-	_ranking_panel.position = Vector2(x + n * CARD.x + (n - 1) * gap + 14, 106)
-	_ranking_panel.size = Vector2(SIDE, CARD.y)
-	var bottom := size.y - 50
+	_online_panel.position = Vector2(x - SIDE - 14, top)
+	_ranking_panel.position = Vector2(x + n * CARD.x + (n - 1) * gap + 14, top)
+	for p in [_online_panel, _ranking_panel]:
+		p.reset_size()
+		p.size = Vector2(SIDE, CARD.y)
+	_error.position = Vector2(0, top + CARD.y + 6)
+	_error.size = Vector2(w, 14)
+	var bottom := top + CARD.y + 24
 	_play.size = Vector2(150, 36)
 	_play.position = Vector2((w - 150) / 2, bottom)
-	for k in _mode_buttons.size():
-		_mode_buttons[k].size = Vector2(118, 36)
-		_mode_buttons[k].position = Vector2(w / 2 - 75 - 128 if k == 0 else w / 2 + 75 + 10, bottom)
-	_error.position = Vector2(0, 278)
-	_error.size = Vector2(w, 14)
-	var controls: Label = get_node("Controles")
-	controls.position = Vector2(0, size.y - 13)
+	for m in _mode_buttons.size():
+		_mode_buttons[m].size = Vector2(124, 36)
+		_mode_buttons[m].position = Vector2(w / 2 - 75 - 134 if m == 0 else w / 2 + 75 + 10, bottom)
+	var controls: Label = _content.get_node("Controles")
+	controls.position = Vector2(0, bottom + 44)
 	controls.size = Vector2(w, 12)
 
 
@@ -349,15 +381,3 @@ func _draw() -> void:
 		pts.append(Vector2(w, h))
 		draw_colored_polygon(pts, colors[layer])
 		draw_polyline(pts.slice(1, pts.size() - 1), Color(1, 1, 1, 0.55), 2.0, true)
-	# título
-	var title := "DIJIMONES"
-	var f := UIStyle.font_bold()
-	var fs := 44
-	var tw := f.get_string_size(title, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
-	var tp := Vector2((w - tw) / 2, 48)
-	draw_string_outline(f, tp + Vector2(0, 4), title, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, 12, Color(0, 0, 0, 0.25))
-	draw_string_outline(f, tp, title, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, 10, Color.WHITE)
-	draw_string(f, tp, title, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, UIStyle.ACCENT)
-	var sub := "Sobreviví en el Digital World"
-	var sw := UIStyle.font().get_string_size(sub, HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
-	draw_string(UIStyle.font(), Vector2((w - sw) / 2, 66), sub, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color(0.08, 0.16, 0.32))
