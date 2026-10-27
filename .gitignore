@@ -1,0 +1,11 @@
+# Modelos rippeados de los juegos oficiales: no se distribuyen (ver README > Assets)
+blender/source/raw/
+# Builds y caches
+build/
+game/.godot/
+game/assets/sprites/test/
+*_x4.png
+__pycache__/
+.DS_Store
+blender/process_all.out
+blender/process_all.log

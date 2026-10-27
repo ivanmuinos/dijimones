@@ -1,0 +1,264 @@
+nombre,etapa,temporada,rol,linea,evoluciona_de,evoluciona_a,mvp,atributo,atributos_otros,familia,fuente_modelo_candidata,estado_modelo,notas,wikimon,nivel_wikimon
+Koromon,In-Training,Adventure,partner,Agumon,,Agumon,inicial,Data,None/Free/No Data,Virus Busters,"Cyber Sleuth, Time Stranger, Digimon Masters",disponible,Ruta alternativa: SkullGreymon (Ultimate),Koromon,Baby II
+Agumon,Rookie,Adventure,partner,Agumon,Koromon,Greymon,inicial,Vaccine,,Dragon's Roar,"Cyber Sleuth, Time Stranger, Digimon Masters, New Century, ReArise, Links",disponible,,Agumon,Child
+Greymon,Champion,Adventure,partner,Agumon,Agumon,MetalGreymon,inicial,Vaccine,,Deep Savers,"Cyber Sleuth, Digimon Masters, New Century, Links",disponible,,Greymon,Adult
+MetalGreymon,Ultimate,Adventure,partner,Agumon,Greymon,WarGreymon,inicial,Vaccine,Virus,Deep Savers,"Digimon Masters, Links",disponible,,Metal Greymon,Perfect
+WarGreymon,Mega,Adventure,partner,Agumon,MetalGreymon,,inicial,Vaccine,,Deep Savers,"Digimon Masters, ReArise, Links",disponible,,War Greymon,Ultimate/Perfect
+Tsunomon,In-Training,Adventure,partner,Gabumon,,Gabumon,inicial,Data,None/Free/No Data,,"Cyber Sleuth, Time Stranger, Digimon Masters, ReArise, Links",disponible,,Tunomon,Baby II
+Gabumon,Rookie,Adventure,partner,Gabumon,Tsunomon,Garurumon,inicial,Data,Vaccine,Metal Empire,"Cyber Sleuth, Time Stranger, Digimon Masters, ReArise, Links",disponible,,Gabumon,Child
+Garurumon,Champion,Adventure,partner,Gabumon,Gabumon,WereGarurumon,inicial,Vaccine,Data,Metal Empire,"Cyber Sleuth, Digimon Masters, Links",disponible,,Garurumon,Adult
+WereGarurumon,Ultimate,Adventure,partner,Gabumon,Garurumon,MetalGarurumon,inicial,Vaccine,Data,Metal Empire,"Digimon Masters, Links",disponible,,Were Garurumon,Perfect
+MetalGarurumon,Mega,Adventure,partner,Gabumon,WereGarurumon,,inicial,Data,Vaccine,Metal Empire,"Digimon Masters, ReArise, Links",disponible,,Metal Garurumon,Ultimate/Perfect
+Tokomon,In-Training,Adventure,partner,Patamon,,Patamon,inicial,Data,None/Free/No Data,Virus Busters,"Cyber Sleuth, Time Stranger, Links",disponible,,Tokomon,Baby II
+Patamon,Rookie,Adventure,partner,Patamon,Tokomon,Angemon,inicial,Data,Free/Vaccine,Nature Spirits,"Cyber Sleuth, Time Stranger, Digimon Masters, Links",disponible,,Patamon,Child
+Angemon,Champion,Adventure,partner,Patamon,Patamon,MagnaAngemon,inicial,Vaccine,,Virus Busters,"Cyber Sleuth, Digimon Masters, Links",disponible,,Angemon,Adult
+MagnaAngemon,Ultimate,Adventure,partner,Patamon,Angemon,Seraphimon,inicial,Vaccine,,Virus Busters,"Digimon Masters, Links",disponible,,Holy Angemon,Perfect
+Seraphimon,Mega,Adventure,partner,Patamon,MagnaAngemon,,inicial,Vaccine,None,Virus Busters,"Digimon Masters, Links",disponible,,Seraphimon,Ultimate/Perfect
+Yokomon,In-Training,Adventure,partner,Biyomon,,Biyomon,desbloqueable,Data,None/Free/No Data,Wind Guardians,"Cyber Sleuth, Time Stranger, Links",disponible,,Pyocomon,Baby II
+Biyomon,Rookie,Adventure,partner,Biyomon,Yokomon,Birdramon,desbloqueable,Vaccine,,Nature Spirits,"Cyber Sleuth, Time Stranger, Digimon Masters, Links",disponible,,Piyomon,Child
+Birdramon,Champion,Adventure,partner,Biyomon,Biyomon,Garudamon,desbloqueable,Vaccine,Data,Nature Spirits,"Cyber Sleuth, Digimon Masters, Links",disponible,,Birdramon,Adult
+Garudamon,Ultimate,Adventure,partner,Biyomon,Birdramon,Phoenixmon,desbloqueable,Vaccine,,Virus Busters,"Digimon Masters, Links",disponible,,Garudamon,Perfect
+Phoenixmon,Mega,Adventure,partner,Biyomon,Garudamon,,desbloqueable,Vaccine,,Virus Busters,"Digimon Masters, Links",disponible,,Hououmon,Ultimate/Perfect
+Motimon,In-Training,Adventure,partner,Tentomon,,Tentomon,desbloqueable,Data,None/Free/No Data,Nature Spirits,"Cyber Sleuth, Time Stranger, Links",disponible,,Mochimon,Baby II
+Tentomon,Rookie,Adventure,partner,Tentomon,Motimon,Kabuterimon,desbloqueable,Vaccine,Virus/Data,Jungle Troopers,"Cyber Sleuth, Time Stranger, Digimon Masters",disponible,,Tentomon,Child
+Kabuterimon,Champion,Adventure,partner,Tentomon,Tentomon,MegaKabuterimon,desbloqueable,Vaccine,,Jungle Troopers,"Cyber Sleuth, Digimon Masters",disponible,,Kabuterimon,Adult
+MegaKabuterimon,Ultimate,Adventure,partner,Tentomon,Kabuterimon,HerculesKabuterimon,desbloqueable,,,,"Digimon Masters, Links",disponible,,Atlur Kabuterimon,
+HerculesKabuterimon,Mega,Adventure,partner,Tentomon,MegaKabuterimon,,desbloqueable,Vaccine,Data,Jungle Troopers,"Digimon Masters, Links",disponible,,Herakle Kabuterimon,Ultimate/Perfect
+Tanemon,In-Training,Adventure,partner,Palmon,,Palmon,desbloqueable,Data,None/Free/No Data,,"Cyber Sleuth, Time Stranger, Digimon Masters, Links",disponible,,Tanemon,Baby II
+Palmon,Rookie,Adventure,partner,Palmon,Tanemon,Togemon,desbloqueable,Data,Vaccine,Jungle Troopers,"Cyber Sleuth, Time Stranger, Digimon Masters, Links",disponible,,Palmon,Child
+Togemon,Champion,Adventure,partner,Palmon,Palmon,Lillymon,desbloqueable,Data,Virus,Jungle Troopers,"Cyber Sleuth, Digimon Masters, Links",disponible,,Togemon,Adult
+Lillymon,Ultimate,Adventure,partner,Palmon,Togemon,Rosemon,desbloqueable,Data,,Jungle Troopers,"Cyber Sleuth, Digimon Masters",disponible,,Lilimon,Perfect
+Rosemon,Mega,Adventure,partner,Palmon,Lillymon,,desbloqueable,Data,,Jungle Troopers,"Digimon Masters, Links",disponible,,Rosemon,Ultimate/Perfect
+Bukamon,In-Training,Adventure,partner,Gomamon,,Gomamon,desbloqueable,Data,None/Free/No Data,Deep Savers,"Cyber Sleuth, Time Stranger, Links",disponible,,Pukamon,Baby II
+Gomamon,Rookie,Adventure,partner,Gomamon,Bukamon,Ikkakumon,desbloqueable,Vaccine,,Deep Savers,"Cyber Sleuth, Time Stranger, Digimon Masters, Links",disponible,,Gomamon,Child
+Ikkakumon,Champion,Adventure,partner,Gomamon,Gomamon,Zudomon,desbloqueable,Vaccine,,Deep Savers,"Cyber Sleuth, Digimon Masters, Links",disponible,,Ikkakumon,Adult
+Zudomon,Ultimate,Adventure,partner,Gomamon,Ikkakumon,Vikemon,desbloqueable,Vaccine,,Deep Savers,"Digimon Masters, Links",disponible,,Zudomon,Perfect
+Vikemon,Mega,Adventure,partner,Gomamon,Zudomon,,desbloqueable,Free,Data/Vaccine/None,Deep Savers,"Digimon Masters, Links",disponible,,Vikemon,Ultimate/Perfect
+Nyaromon,In-Training,Adventure,partner,Salamon,,Salamon,,Free,None/No Data,Virus Busters,"Cyber Sleuth, Time Stranger, Links",disponible,,Nyaromon,Baby II
+Salamon,Rookie,Adventure,partner,Salamon,Nyaromon,Gatomon,,Vaccine,Data,Nature Spirits,"Cyber Sleuth, Time Stranger, Digimon Masters, Links",disponible,,Plotmon,Child
+Gatomon,Champion,Adventure,partner,Salamon,Salamon,Angewomon,,Vaccine,Free,Nature Spirits,"Cyber Sleuth, Digimon Masters, Links",disponible,,Tailmon,Adult/Child
+Angewomon,Ultimate,Adventure,partner,Salamon,Gatomon,Magnadramon,,Vaccine,Free,Nature Spirits,"Digimon Masters, Links",disponible,,Angewomon,Perfect/Ultimate
+Magnadramon,Mega,Adventure,partner,Salamon,Angewomon,,,Vaccine,Free,Dragon's Roar,"Digimon Masters, Links",disponible,,Holydramon,Ultimate/Perfect
+SkullGreymon,Ultimate,Adventure,partner-alt,,,,sí,Virus,,Dragon's Roar,"Digimon Masters, ReArise, Links",disponible,Ruta dark de Agumon,Skull Greymon,Perfect
+Omnimon,Mega,Adventure,partner-dna,,,,,Vaccine,,Metal Empire,"Cyber Sleuth, Digimon Masters, Links",disponible,DNA: WarGreymon + MetalGarurumon,Omegamon,Ultimate/Perfect
+DemiVeemon,In-Training,Adventure 02,partner,Veemon,,Veemon,,Free,None,,ReArise,disponible,"Armor: Flamedramon, Raidramon. Paildramon = DNA con Stingmon",Chibimon,Baby II
+Veemon,Rookie,Adventure 02,partner,Veemon,DemiVeemon,ExVeemon,,Free,Vaccine/None,Dragon's Roar,"Cyber Sleuth, Time Stranger, Digimon Masters, ReArise, Links",disponible,,V-mon,Child
+ExVeemon,Champion,Adventure 02,partner,Veemon,Veemon,Paildramon,,Free,Vaccine/Data/None,Dragon's Roar,"Cyber Sleuth, Digimon Masters, Links",disponible,,XV-mon,Adult
+Paildramon,Ultimate,Adventure 02,partner,Veemon,ExVeemon,Imperialdramon,,Free,Data/Vaccine/None,Dragon's Roar,"Digimon Masters, Links",disponible,,Paildramon,Perfect
+Imperialdramon,Mega,Adventure 02,partner,Veemon,Paildramon,,,,,,Digimon Masters,disponible,,Imperialdramon,
+Minomon,In-Training,Adventure 02,partner,Wormmon,,Wormmon,,Free,None,,a buscar,no existe,,Minomon,Baby II
+Wormmon,Rookie,Adventure 02,partner,Wormmon,Minomon,Stingmon,,Free,Virus/Vaccine/None,Jungle Troopers,"Cyber Sleuth, Time Stranger, Digimon Masters, Links",disponible,,Wormmon,Child
+Stingmon,Champion,Adventure 02,partner,Wormmon,Wormmon,Paildramon,,Free,Virus/Data/None,Jungle Troopers,"Cyber Sleuth, Digimon Masters, Links",disponible,,Stingmon,Adult
+Paildramon,Ultimate,Adventure 02,partner,Wormmon,Stingmon,Imperialdramon,,Free,Data/Vaccine/None,Dragon's Roar,"Digimon Masters, Links",disponible,,Paildramon,Perfect
+Imperialdramon,Mega,Adventure 02,partner,Wormmon,Paildramon,,,,,,Digimon Masters,disponible,,Imperialdramon,
+Poromon,In-Training,Adventure 02,partner,Hawkmon,,Hawkmon,,Free,None,Wind Guardians,a buscar,no existe,Silphymon = DNA con Gatomon. Mega: definir,Poromon,Baby II
+Hawkmon,Rookie,Adventure 02,partner,Hawkmon,Poromon,Aquilamon,,Free,Data/None,Wind Guardians,"Cyber Sleuth, Time Stranger, Digimon Masters, Links",disponible,,Hawkmon,Child
+Aquilamon,Champion,Adventure 02,partner,Hawkmon,Hawkmon,Silphymon,,Free,Data/None,Wind Guardians,"Cyber Sleuth, Digimon Masters, Links",disponible,,Aquilamon,Adult
+Silphymon,Ultimate,Adventure 02,partner,Hawkmon,Aquilamon,,,Free,Data/None,Nature Spirits,"Cyber Sleuth, Digimon Masters",disponible,,Silphymon,Perfect
+Upamon,In-Training,Adventure 02,partner,Armadillomon,,Armadillomon,,Free,None,Deep Savers,Digimon Masters,disponible,Shakkoumon = DNA con Angemon. Mega: definir,Upamon,Baby II
+Armadillomon,Rookie,Adventure 02,partner,Armadillomon,Upamon,Ankylomon,,Free,Vaccine/None,Deep Savers,"Cyber Sleuth, Time Stranger, Digimon Masters, Links",disponible,,Armadimon,Child
+Ankylomon,Champion,Adventure 02,partner,Armadillomon,Armadillomon,Shakkoumon,,Free,Vaccine/None,Deep Savers,"Cyber Sleuth, Digimon Masters",disponible,,Ankylomon,Adult
+Shakkoumon,Ultimate,Adventure 02,partner,Armadillomon,Ankylomon,,,Free,Data/None/Vaccine,Deep Savers,"Cyber Sleuth, Digimon Masters",disponible,,Shakkoumon,Perfect
+Flamedramon,Armor,Adventure 02,partner-armor,,,,,Free,Data/Vaccine,Dragon's Roar,"Cyber Sleuth, Digimon Masters",disponible,,Fladramon,Armor/Adult/Perfect/Child
+Raidramon,Armor,Adventure 02,partner-armor,,,,,,System,,"Digimon Masters, ReArise",disponible,,Raidramon,
+Halsemon,Armor,Adventure 02,partner-armor,,,,,Free,Data,Nature Spirits,Digimon Masters,disponible,,Holsmon,Armor/Adult/Child
+Digmon,Armor,Adventure 02,partner-armor,,,,,Free,Vaccine/None,Jungle Troopers,Digimon Masters,disponible,,Digmon,Armor/Adult/Child
+Nefertimon,Armor,Adventure 02,partner-armor,,,,,Free,Vaccine,Nature Spirits,Digimon Masters,disponible,,Nefertimon,Armor/Adult
+Pegasusmon,Armor,Adventure 02,partner-armor,,,,,Free,Vaccine,Nature Spirits,Digimon Masters,disponible,,Pegasmon,Armor/Adult/Unknown/Child
+Gigimon,In-Training,Tamers,partner,Guilmon,,Guilmon,,Free,None,Dragon's Roar,ReArise,disponible,Forma especial: Gallantmon Crimson Mode,Gigimon,Baby II
+Guilmon,Rookie,Tamers,partner,Guilmon,Gigimon,Growlmon,,Virus,,Deep Savers,"Cyber Sleuth, Time Stranger, Digimon Masters, New Century, Links",disponible,,Guilmon,Child
+Growlmon,Champion,Tamers,partner,Guilmon,Guilmon,WarGrowlmon,,Virus,,Dragon's Roar,"Cyber Sleuth, Digimon Masters, New Century, Links",disponible,,Growmon,Adult
+WarGrowlmon,Ultimate,Tamers,partner,Guilmon,Growlmon,Gallantmon,,Virus,,Dragon's Roar,"Digimon Masters, New Century, ReArise, Links",disponible,,Megalo Growmon,Perfect
+Gallantmon,Mega,Tamers,partner,Guilmon,WarGrowlmon,,,Virus,,Dragon's Roar,"Digimon Masters, New Century, ReArise, Links",disponible,,Dukemon,Ultimate
+Viximon,In-Training,Tamers,partner,Renamon,,Renamon,,Free,None,,a buscar,no existe,,Pokomon,Baby II
+Renamon,Rookie,Tamers,partner,Renamon,Viximon,Kyubimon,,Data,,Nature Spirits,"Cyber Sleuth, Time Stranger, Digimon Masters, Links",disponible,,Renamon,Child
+Kyubimon,Champion,Tamers,partner,Renamon,Renamon,Taomon,,Data,,Nightmare Soldiers,"Cyber Sleuth, Digimon Masters, New Century, Links",disponible,,Kyubimon,Adult
+Taomon,Ultimate,Tamers,partner,Renamon,Kyubimon,Sakuyamon,,Data,,Nature Spirits,"Digimon Masters, ReArise, Links",disponible,,Taomon,Perfect
+Sakuyamon,Mega,Tamers,partner,Renamon,Taomon,,,Data,,Nature Spirits,"Digimon Masters, Links",disponible,,Sakuyamon,Ultimate
+Gummymon,In-Training,Tamers,partner,Terriermon,,Terriermon,,Free,None,,ReArise,disponible,,Gummymon,Baby II
+Terriermon,Rookie,Tamers,partner,Terriermon,Gummymon,Gargomon,,Vaccine,Data,Metal Empire,"Cyber Sleuth, Time Stranger, Digimon Masters",disponible,,Terriermon,Child
+Gargomon,Champion,Tamers,partner,Terriermon,Terriermon,Rapidmon,,Free,Virus,Nightmare Soldiers,"Cyber Sleuth, Digimon Masters, Links",disponible,,Gargomon,Armor/Adult/Child
+Rapidmon,Ultimate,Tamers,partner,Terriermon,Gargomon,MegaGargomon,,,,,"Cyber Sleuth, Digimon Masters, Links",disponible,,Rapidmon,
+MegaGargomon,Mega,Tamers,partner,Terriermon,Rapidmon,,,Vaccine,,Metal Empire,"Cyber Sleuth, Digimon Masters",disponible,,Saint Galgomon,Ultimate
+Kokomon,In-Training,Tamers,partner,Lopmon,,Lopmon,,Free,None,,ReArise,disponible,,Chocomon,Baby II
+Lopmon,Rookie,Tamers,partner,Lopmon,Kokomon,Turuiemon,,Data,,Nature Spirits,"Cyber Sleuth, Digimon Masters, Links",disponible,,Lopmon,Child
+Turuiemon,Champion,Tamers,partner,Lopmon,Lopmon,Antylamon,,Data,,Nature Spirits,"Cyber Sleuth, Digimon Masters, ReArise",disponible,,Turuiemon,Adult
+Antylamon,Ultimate,Tamers,partner,Lopmon,Turuiemon,Cherubimon,,Virus,Data,Nightmare Soldiers,"Cyber Sleuth, Digimon Masters",disponible,,Andiramon,Perfect
+Cherubimon,Mega,Tamers,partner,Lopmon,Antylamon,,,,,,"Cyber Sleuth, Digimon Masters",disponible,,Cherubimon,
+Monodramon,Rookie,Tamers,partner,Monodramon,,Strikedramon,,Vaccine,Data,Dragon's Roar,"Cyber Sleuth, Time Stranger, Digimon Masters",disponible,,Monodramon,Child
+Strikedramon,Champion,Tamers,partner,Monodramon,Monodramon,Cyberdramon,,Vaccine,,Metal Empire,"Cyber Sleuth, Digimon Masters",disponible,,Strikedramon,Adult
+Cyberdramon,Ultimate,Tamers,partner,Monodramon,Strikedramon,Justimon,,Vaccine,,Dragon's Roar,"Cyber Sleuth, Digimon Masters",disponible,,Cyberdramon,Perfect
+Justimon,Mega,Tamers,partner,Monodramon,Cyberdramon,,,,,,"Cyber Sleuth, Digimon Masters, Links",disponible,,Justimon,
+Guardromon,Champion,Tamers,partner,Guardromon,,Andromon,,Virus,Data/Vaccine,Metal Empire,"Cyber Sleuth, Digimon Masters, ReArise, Links",disponible,,Guardromon,Adult
+Andromon,Ultimate,Tamers,partner,Guardromon,Guardromon,HiAndromon,,Vaccine,Data,Metal Empire,"Digimon Masters, Links",disponible,,Andromon,Perfect
+HiAndromon,Mega,Tamers,partner,Guardromon,Andromon,,,Vaccine,,Metal Empire,"Digimon Masters, Links",disponible,,Hi Andromon,Ultimate
+Impmon,Rookie,Tamers,partner,Impmon,,Beelzemon,,Virus,,Nightmare Soldiers,"Cyber Sleuth, Time Stranger, Digimon Masters",disponible,,Impmon,Child
+Beelzemon,Mega,Tamers,partner,Impmon,Impmon,,,Virus,,Dark Area,"Cyber Sleuth, Digimon Masters, Links",disponible,,Beelzebumon,Ultimate
+Leomon,Champion,Tamers,partner,Leomon,,GrapLeomon,,Vaccine,,Nature Spirits,"Cyber Sleuth, Digimon Masters, New Century, Links",disponible,,Leomon,Adult
+GrapLeomon,Ultimate,Tamers,partner,Leomon,Leomon,SaberLeomon,,Vaccine,,Nature Spirits,"Digimon Masters, Links",disponible,,Grappu Leomon,Perfect
+SaberLeomon,Mega,Tamers,partner,Leomon,GrapLeomon,,,Data,Vaccine,Nature Spirits,"Digimon Masters, ReArise, Links",disponible,,Saber Leomon,Ultimate/Perfect
+MarineAngemon,Mega,Tamers,partner,,,,,Vaccine,Virus,Deep Savers,"Digimon Masters, Links",disponible,,Marin Angemon,Ultimate/Perfect
+Agunimon,Human Spirit,Frontier,partner,Agunimon,,BurningGreymon,,Variable,Free/Unknown/Vaccine,Deep Savers,"Cyber Sleuth, Digimon Masters",disponible,Spirit Evolution: Human ↔ Beast,Agnimon,Hybrid/Adult/Perfect/Child/No Level
+BurningGreymon,Beast Spirit,Frontier,partner,Agunimon,Agunimon,Aldamon,,Variable,Free/Vaccine,Deep Savers,"Cyber Sleuth, Digimon Masters",disponible,,Vritramon,Hybrid/Perfect/Adult
+Aldamon,Fusion,Frontier,partner,Agunimon,BurningGreymon,EmperorGreymon,,Variable,Free/Vaccine,Deep Savers,New Century,disponible,,Aldamon,Hybrid/Perfect/Ultimate
+EmperorGreymon,Ancient/Unified,Frontier,partner,Agunimon,Aldamon,,,Variable,Free/Vaccine/None/Virus,Deep Savers,"Cyber Sleuth, Digimon Masters",disponible,,Kaiser Greymon,Hybrid/Ultimate/No Level
+Lobomon,Human Spirit,Frontier,partner,Lobomon,,KendoGarurumon,,Variable,Free/Data,Nature Spirits,"Cyber Sleuth, Digimon Masters",disponible,,Wolfmon,Hybrid/Adult/Child
+KendoGarurumon,Beast Spirit,Frontier,partner,Lobomon,Lobomon,Beowolfmon,,Variable,Free/Vaccine,Nature Spirits,"Cyber Sleuth, Digimon Masters",disponible,,Garummon,Hybrid/Perfect/Adult
+Beowolfmon,Fusion,Frontier,partner,Lobomon,KendoGarurumon,MagnaGarurumon,,Variable,Free/Data,Virus Busters,New Century,disponible,,Beowolfmon,Hybrid/Perfect/Ultimate
+MagnaGarurumon,Ancient/Unified,Frontier,partner,Lobomon,Beowolfmon,,,Variable,Free/Data/None,Metal Empire,"Cyber Sleuth, Digimon Masters",disponible,,Magna Garurumon,Hybrid/Ultimate
+Kazemon,Human Spirit,Frontier,partner,Kazemon,,Zephyrmon,,Variable,Free/Data,Nature Spirits,"Digimon Masters, New Century",disponible,,Fairimon,Hybrid/Adult
+Zephyrmon,Beast Spirit,Frontier,partner,Kazemon,Kazemon,JetSilphymon,,Variable,Free/Data,Wind Guardians,"Digimon Masters, New Century",disponible,,Shutumon,Hybrid/Perfect
+JetSilphymon,Fusion,Frontier,partner,Kazemon,Zephyrmon,,,Variable,Free/None/Data,Wind Guardians,New Century,disponible,,Jet Silphymon,Hybrid/Perfect/Ultimate
+Beetlemon,Human Spirit,Frontier,partner,Beetlemon,,MetalKabuterimon,,Variable,Free/Data,Metal Empire,Digimon Masters,disponible,,Blitzmon,Hybrid/Adult
+MetalKabuterimon,Beast Spirit,Frontier,partner,Beetlemon,Beetlemon,RhinoKabuterimon,,Variable,Free/Data,Metal Empire,Digimon Masters,disponible,,Bolgmon,Hybrid/Perfect/Ultimate
+RhinoKabuterimon,Fusion,Frontier,partner,Beetlemon,MetalKabuterimon,,,Variable,Free,,a buscar,no existe,,Rhino Kabuterimon,Hybrid/Perfect
+Kumamon,Human Spirit,Frontier,partner,Kumamon,,Korikakumon,,,,,"Time Stranger, Digimon Masters, New Century",disponible,,Kumamon,
+Korikakumon,Beast Spirit,Frontier,partner,Kumamon,Kumamon,Daipenmon,,Variable,Free/Data,Deep Savers,"Digimon Masters, New Century",disponible,,Blizzarmon,Hybrid/Perfect
+Daipenmon,Fusion,Frontier,partner,Kumamon,Korikakumon,,,Variable,Free/Data,,New Century,disponible,,Daipenmon,Hybrid/Perfect/Ultimate/Unknown
+Loweemon,Human Spirit,Frontier,partner,Loweemon,,KaiserLeomon,,Variable,Virus/Free,Virus Busters,"Digimon Masters, New Century",disponible,,Löwemon,Hybrid/Adult
+KaiserLeomon,Beast Spirit,Frontier,partner,Loweemon,Loweemon,Rhihimon,,Free,Variable/Virus,Nature Spirits,a buscar,no existe,,Kaiser Leomon,Hybrid/Perfect
+Rhihimon,Fusion,Frontier,partner,Loweemon,KaiserLeomon,,,Free,Variable/Virus,,New Century,disponible,,Raihimon,Hybrid/Perfect/Ultimate
+Susanoomon,Mega,Frontier,partner-dna,,,,,Vaccine,Free,Deep Savers,"Cyber Sleuth, Digimon Masters, Links",disponible,Fusión de los 10 espíritus,Susanoomon,Ultimate/Hybrid
+Koromon,In-Training,Data Squad,partner,Agumon (Savers),,Agumon (Savers),,Data,None/Free/No Data,Virus Busters,"Cyber Sleuth, Time Stranger, Digimon Masters",disponible,Burst Mode: ShineGreymon Burst Mode,Koromon,Baby II
+Agumon (Savers),Rookie,Data Squad,partner,Agumon (Savers),Koromon,GeoGreymon,,Vaccine,,Dragon's Roar,"Cyber Sleuth, Time Stranger, Digimon Masters, New Century, ReArise, Links",disponible,,Agumon,Child
+GeoGreymon,Champion,Data Squad,partner,Agumon (Savers),Agumon (Savers),RiseGreymon,,Vaccine,,Dragon's Roar,"Cyber Sleuth, Digimon Masters, Links",disponible,,Geo Greymon,Adult
+RiseGreymon,Ultimate,Data Squad,partner,Agumon (Savers),GeoGreymon,ShineGreymon,,Vaccine,,Dragon's Roar,a buscar,no existe,,Rize Greymon,Perfect
+ShineGreymon,Mega,Data Squad,partner,Agumon (Savers),RiseGreymon,,,Vaccine,,Dragon's Roar,"Digimon Masters, ReArise, Links",disponible,,Shine Greymon,Ultimate
+Gaomon,Rookie,Data Squad,partner,Gaomon,,Gaogamon,,Data,,Dragon's Roar,"Cyber Sleuth, Time Stranger, Digimon Masters, ReArise, Links",disponible,,Gaomon,Child
+Gaogamon,Champion,Data Squad,partner,Gaomon,Gaomon,MachGaogamon,,Data,,Nature Spirits,"Cyber Sleuth, Digimon Masters, Links",disponible,,Gaogamon,Adult
+MachGaogamon,Ultimate,Data Squad,partner,Gaomon,Gaogamon,MirageGaogamon,,Data,,Nature Spirits,"Digimon Masters, Links",disponible,,Mach Gaogamon,Perfect
+MirageGaogamon,Mega,Data Squad,partner,Gaomon,MachGaogamon,,,Data,,Nature Spirits,"Digimon Masters, Links",disponible,,Mirage Gaogamon,Ultimate
+Lalamon,Rookie,Data Squad,partner,Lalamon,,Sunflowmon,,Data,,Jungle Troopers,"Cyber Sleuth, Time Stranger, Digimon Masters, Links",disponible,,Lalamon,Child
+Sunflowmon,Champion,Data Squad,partner,Lalamon,Lalamon,Lilamon,,Data,,Jungle Troopers,"Cyber Sleuth, Digimon Masters, ReArise, Links",disponible,,Sunflowmon,Adult
+Lilamon,Ultimate,Data Squad,partner,Lalamon,Sunflowmon,Rosemon,,Data,,Jungle Troopers,"Digimon Masters, ReArise, Links",disponible,,Lilamon,Perfect
+Rosemon,Mega,Data Squad,partner,Lalamon,Lilamon,,,Data,,Jungle Troopers,"Digimon Masters, Links",disponible,,Rosemon,Ultimate/Perfect
+Falcomon,Rookie,Data Squad,partner,Falcomon,,Peckmon,,Vaccine,,Wind Guardians,"Cyber Sleuth, Time Stranger, Digimon Masters, Links",disponible,,Falcomon,Child
+Peckmon,Champion,Data Squad,partner,Falcomon,Falcomon,Crowmon,,Vaccine,,Nature Spirits,"Cyber Sleuth, Digimon Masters, ReArise, Links",disponible,,Peckmon,Adult
+Crowmon,Ultimate,Data Squad,partner,Falcomon,Peckmon,Ravemon,,,,,"Cyber Sleuth, Digimon Masters",disponible,,Crowmon,
+Ravemon,Mega,Data Squad,partner,Falcomon,Crowmon,,,Vaccine,,Toho Braves,"Cyber Sleuth, Digimon Masters",disponible,,Ravmon,Ultimate
+Kudamon,Rookie,Data Squad,partner,Kudamon,,Reppamon,,Vaccine,,Virus Busters,"Cyber Sleuth, Time Stranger, Digimon Masters, New Century, Links",disponible,,Kudamon,Child
+Reppamon,Champion,Data Squad,partner,Kudamon,Kudamon,Chirinmon,,Vaccine,,Virus Busters,"Cyber Sleuth, Digimon Masters, Links",disponible,,Reppamon,Adult
+Chirinmon,Ultimate,Data Squad,partner,Kudamon,Reppamon,Sleipmon,,Vaccine,,Virus Busters,"Cyber Sleuth, Digimon Masters",disponible,,Tyilinmon,Perfect
+Sleipmon,Mega,Data Squad,partner,Kudamon,Chirinmon,,,Vaccine,,Virus Busters,a buscar,no existe,,Sleipmon,Ultimate
+Shoutmon,Rookie,Fusion (Xros Wars),partner,Shoutmon,,Shoutmon X4,,Data,Free/None/Unknown,Nature Spirits,"Cyber Sleuth, Time Stranger, Digimon Masters, Links",disponible,DigiXros: forma según aliados juntados,Shoutmon,Child/No Level
+Shoutmon X4,DigiXros,Fusion (Xros Wars),partner,Shoutmon,Shoutmon,Shoutmon X5,,Data,None/Unknown/Free,Nature Spirits,a buscar,no existe,,Shoutmon X4,Adult/No Level
+Shoutmon X5,DigiXros,Fusion (Xros Wars),partner,Shoutmon,Shoutmon X4,Shoutmon X7,,Data,Unknown/None/Free,Nature Spirits,a buscar,no existe,,Shoutmon X5,Perfect/No Level
+Shoutmon X7,DigiXros,Fusion (Xros Wars),partner,Shoutmon,Shoutmon X5,,,Data,Unknown/None/Free,Nature Spirits,a buscar,no existe,,Shoutmon X7,Ultimate/No Level
+Ballistamon,varía,Fusion (Xros Wars),partner,,,,,Vaccine,Unknown/None/Free,Metal Empire,Digimon Masters,disponible,,Ballistamon,Adult/No Level
+Dorulumon,varía,Fusion (Xros Wars),partner,,,,,Virus,Unknown/None/Free,Nature Spirits,Digimon Masters,disponible,,Dorulumon,Adult/No Level
+Starmon,varía,Fusion (Xros Wars),partner,,,,,Data,,Metal Empire,"Cyber Sleuth, Digimon Masters, ReArise, Links",disponible,,Starmon,Adult
+Cutemon,varía,Fusion (Xros Wars),partner,,,,,Vaccine,Unknown/None,Virus Busters,New Century,disponible,,Cutemon,Child/No Level
+Damemon,varía,Fusion (Xros Wars),partner,,,,,Virus,Free/None,,a buscar,no existe,,Damemon,Adult/No Level
+MailBirdramon,varía,Fusion (Xros Wars),partner,,,,,Data,None/Free,Metal Empire,Digimon Masters,disponible,,Mail Birdramon,Adult/No Level
+Sparrowmon,varía,Fusion (Xros Wars),partner,,,,,Data,Unknown/None/Free,Nature Spirits,a buscar,no existe,,Sparrowmon,Child/No Level
+Greymon (Xros),Champion,Fusion (Xros Wars),partner,Greymon (Xros),,MetalGreymon (Xros),,Vaccine,,Deep Savers,"Cyber Sleuth, Digimon Masters, New Century, Links",disponible,,Greymon,Adult
+MetalGreymon (Xros),Ultimate,Fusion (Xros Wars),partner,Greymon (Xros),Greymon (Xros),,,Vaccine,Virus,Deep Savers,"Digimon Masters, Links",disponible,,Metal Greymon,Perfect
+Meicoomon,Rookie,Adventure tri. / películas,partner,Meicoomon,,Meicrackmon,,Free,Unknown/Virus,Nature Spirits,"ReArise, Links",disponible,Ordinemon también como jefe,Meicoomon,Adult
+Meicrackmon,Champion,Adventure tri. / películas,partner,Meicoomon,Meicoomon,Raguelmon,,Vaccine,,Nature Spirits,ReArise,disponible,,Meicrackmon,Perfect
+Raguelmon,Ultimate,Adventure tri. / películas,partner,Meicoomon,Meicrackmon,Ordinemon,,Free,Unknown/Virus,,"ReArise, Links",disponible,,Raguelmon,Ultimate
+Ordinemon,Mega,Adventure tri. / películas,partner,Meicoomon,Raguelmon,,,Virus,Unknown/Free,,New Century,disponible,,Ordinemon,Ultimate
+Ukkomon,varía,Adventure tri. / películas,partner,,,,,Free,Unknown,,a buscar,no existe,02: The Beginning,Ukkomon,Child
+Eosmon,varía,Adventure tri. / películas,partner,,,,,,,,New Century,disponible,Last Evolution Kizuna,Eosmon,
+Gammamon,Rookie,Ghost Game,partner,,,,,Virus,,Virus Busters,Digimon Masters,disponible,Verificar línea evolutiva en Wikimon,Gammamon,Child
+Angoramon,Rookie,Ghost Game,partner,,,,,Vaccine,,Nature Spirits,a buscar,no existe,Verificar línea evolutiva en Wikimon,Angoramon,Child
+Jellymon,Rookie,Ghost Game,partner,,,,,Data,,Deep Savers,a buscar,no existe,Verificar línea evolutiva en Wikimon,Jellymon,Child
+(verificar),,Beatbreak,partner,,,,,,,,?,sin verificar,Verificar roster en Wikimon | sin página Wikimon | sin página Wikimon,,
+Leomon,,Adventure,jefe,,,,sí,Vaccine,,Nature Spirits,"Cyber Sleuth, Digimon Masters, New Century, Links",disponible,,Leomon,Adult
+Ogremon,,Adventure,jefe,,,,sí,Virus,,Dark Area,"Cyber Sleuth, Digimon Masters, Links",disponible,,Orgemon,Adult
+Devimon,,Adventure,jefe,,,,sí,Virus,Free,Dark Area,"Cyber Sleuth, Digimon Masters, Links",disponible,,Devimon,Adult
+Etemon,,Adventure,jefe,,,,,Virus,,Deep Savers,"Digimon Masters, Links",disponible,,Etemon,Perfect
+MetalEtemon,,Adventure,jefe,,,,,Virus,Vaccine,Metal Empire,"Digimon Masters, Links",disponible,,Metal Etemon,Ultimate/Perfect
+Myotismon,,Adventure,jefe,,,,,Virus,,Dark Area,"Cyber Sleuth, Digimon Masters",disponible,,Vamdemon,Perfect
+VenomMyotismon,,Adventure,jefe,,,,,Virus,Free,Nightmare Soldiers,"Cyber Sleuth, Digimon Masters",disponible,,Venom Vamdemon,Ultimate/Perfect
+MetalSeadramon,,Adventure,jefe,,,,,Data,,Deep Savers,"Digimon Masters, Links",disponible,,Metal Seadramon,Ultimate/Perfect
+Puppetmon,,Adventure,jefe,,,,,Virus,,Jungle Troopers,"Digimon Masters, Links",disponible,,Pinochimon,Ultimate/Perfect
+Machinedramon,,Adventure,jefe,,,,,Virus,Unknown/Free,Metal Empire,"Digimon Masters, Links",disponible,,Mugendramon,Ultimate/Perfect
+Piedmon,,Adventure,jefe,,,,,Virus,,Nightmare Soldiers,"Digimon Masters, Links",disponible,,Piemon,Ultimate/Perfect
+Apocalymon,,Adventure,jefe,,,,sí,Free,Unknown/Virus,Dark Area,"Cyber Sleuth, Digimon Masters, Links",disponible,,Apocalymon,Ultimate/Perfect
+Kimeramon,,Adventure 02,jefe,,,,,Data,,Nightmare Soldiers,"Digimon Masters, Links",disponible,,Chimairamon,Perfect/Ultimate
+BlackWarGreymon,,Adventure 02,jefe,,,,,Virus,Vaccine,Dragon's Roar,"Digimon Masters, ReArise, Links",disponible,,Black War Greymon,Ultimate
+Arukenimon,,Adventure 02,jefe,,,,,Virus,,Jungle Troopers,Digimon Masters,disponible,,Archnemon,Perfect
+Mummymon,,Adventure 02,jefe,,,,,Virus,Free,Nightmare Soldiers,a buscar,no existe,,Mummymon,Perfect
+Daemon,,Adventure 02,jefe,,,,,Virus,,Dark Area,"Cyber Sleuth, Digimon Masters, New Century, Links",disponible,,Demon,Ultimate
+MaloMyotismon,,Adventure 02,jefe,,,,,Virus,Free,Nightmare Soldiers,"Digimon Masters, ReArise",disponible,,Belial Vamdemon,Ultimate
+Diaboromon,,Adventure 02,jefe,,,,,Virus,Unknown/None/Free,Dark Area,"Cyber Sleuth, Digimon Masters, ReArise",disponible,,Diablomon,Ultimate/Perfect
+Mihiramon,,Tamers,jefe,,,,,Data,,Wind Guardians,ReArise,disponible,,Mihiramon,Perfect
+Sandiramon,,Tamers,jefe,,,,,Virus,,Jungle Troopers,ReArise,disponible,,Sandiramon,Perfect
+Sinduramon,,Tamers,jefe,,,,,Data,,Metal Empire,"Digimon Masters, ReArise",disponible,,Sinduramon,Perfect
+Pajiramon,,Tamers,jefe,,,,,Virus,,Nature Spirits,"Digimon Masters, ReArise",disponible,,Pajiramon,Perfect
+Vajramon,,Tamers,jefe,,,,,Vaccine,,Nature Spirits,ReArise,disponible,,Vajramon,Perfect
+Indramon,,Tamers,jefe,,,,,Virus,,Nature Spirits,ReArise,disponible,,Indaramon,Perfect
+Kumbhiramon,,Tamers,jefe,,,,,Vaccine,,Nature Spirits,ReArise,disponible,,Kumbhiramon,Perfect
+Vikaralamon,,Tamers,jefe,,,,,Vaccine,,Nature Spirits,"Digimon Masters, ReArise",disponible,,Vikaralamon,Perfect
+Makuramon,,Tamers,jefe,,,,,Data,,Metal Empire,ReArise,disponible,,Makuramon,Perfect
+Majiramon,,Tamers,jefe,,,,,Data,,Wind Guardians,ReArise,disponible,,Majiramon,Perfect
+Caturamon,,Tamers,jefe,,,,,Data,,Metal Empire,ReArise,disponible,,Caturamon,Perfect
+Beelzemon (corrupto),,Tamers,jefe,,,,,Virus,,Dark Area,"Cyber Sleuth, Digimon Masters, Links",disponible,,Beelzebumon,Ultimate
+D-Reaper,,Tamers,jefe,,,,,,,,a buscar,sin verificar,sin página Wikimon | sin página Wikimon,,
+Cherubimon (Vice),,Frontier,jefe,,,,,,,,"Cyber Sleuth, Digimon Masters",disponible,,Cherubimon,
+Duskmon,,Frontier,jefe,,,,,Variable,Free/Virus,Dark Area,a buscar,no existe,,Duskmon,Hybrid/Child/Adult
+Velgemon,,Frontier,jefe,,,,,Variable,Free,Nightmare Soldiers,a buscar,no existe,,Velgrmon,Hybrid/Adult/Perfect
+Mercurymon,,Frontier,jefe,,,,,Virus,,Nature Spirits,Digimon Masters,disponible,,Mercurymon,Ultimate
+Grumblemon,,Frontier,jefe,,,,,Variable,Free/Data,Metal Empire,Digimon Masters,disponible,,Grottemon,Hybrid/Adult
+Ranamon,,Frontier,jefe,,,,,Variable,Free/Vaccine,Deep Savers,"Digimon Masters, New Century",disponible,,Ranamon,Hybrid/Adult
+Arbormon,,Frontier,jefe,,,,,Variable,Free/Data,Nature Spirits,Digimon Masters,disponible,,Arbormon,Hybrid/Adult
+Lucemon,,Frontier,jefe,,,,,Vaccine,,Virus Busters,"Cyber Sleuth, Time Stranger, Digimon Masters, Links",disponible,,Lucemon,Child/Adult
+Gizumon,,Data Squad,jefe,,,,,,Unknown,,a buscar,no existe,,Proto Gizmon,Unknown/Child
+Belphemon,,Data Squad,jefe,,,,,,,,Digimon Masters,disponible,,Belphemon,
+King Drasil,,Data Squad,jefe,,,,,,,,DS:CS / DS:TS,sin verificar,sin página Wikimon | sin página Wikimon,,
+Bagramon,,Fusion (Xros Wars),jefe,,,,,Virus,None/Free,,New Century,disponible,,Bagramon,Ultimate/No Level
+Tactimon,,Fusion (Xros Wars),jefe,,,,,Data,None/Free,,a buscar,no existe,,Tactimon,Ultimate/No Level
+Lilithmon,,Fusion (Xros Wars),jefe,,,,,Virus,Free,Dark Area,"Cyber Sleuth, Digimon Masters, Links",disponible,,Lilithmon,Ultimate/No Level
+Blastmon,,Fusion (Xros Wars),jefe,,,,,Vaccine,None/Virus/Free,Nature Spirits,a buscar,no existe,,Blastmon,Ultimate/No Level
+DarkKnightmon,,Fusion (Xros Wars),jefe,,,,,Virus,Free/None,Nightmare Soldiers,a buscar,no existe,,Dark Knightmon,Perfect/No Level/Adult
+Quartzmon,,Fusion (Xros Wars),jefe,,,,,Virus,Unknown/None/Free,,a buscar,no existe,,Quartzmon,Ultimate/No Level
+Ordinemon,,Adventure tri. / películas,jefe,,,,,Virus,Unknown/Free,,New Century,disponible,,Ordinemon,Ultimate
+Eosmon (jefe),,Adventure tri. / películas,jefe,,,,,,,,New Century,disponible,,Eosmon,
+Millenniummon,,Adventure: (2020),jefe,,,,,Virus,,Dark Area,"ReArise, Links",disponible,,Millenniumon,Ultimate
+Negamon,,Adventure: (2020),jefe,,,,,,None/Unknown,Unknown,a buscar,no existe,,Negamon,Baby II
+Alphamon,,Royal Knights (raid),jefe,,,,,Vaccine,,Virus Busters,"Cyber Sleuth, Digimon Masters, ReArise, Links",disponible,,Alphamon,Ultimate
+Craniamon,,Royal Knights (raid),jefe,,,,,Vaccine,,Virus Busters,"Cyber Sleuth, Digimon Masters",disponible,,Craniummon,Ultimate
+Crusadermon,,Royal Knights (raid),jefe,,,,,Virus,,Virus Busters,"Cyber Sleuth, Digimon Masters, Links",disponible,,Lord Knightmon,Ultimate
+Dynasmon,,Royal Knights (raid),jefe,,,,,Data,,Virus Busters,"Cyber Sleuth, Digimon Masters",disponible,,Dynasmon,Ultimate
+Examon,,Royal Knights (raid),jefe,,,,,Data,,Dragon's Roar,"Cyber Sleuth, Digimon Masters",disponible,,Examon,Ultimate
+Gankoomon,,Royal Knights (raid),jefe,,,,,Data,,Virus Busters,Links,disponible,,Gankoomon,Ultimate
+Jesmon,,Royal Knights (raid),jefe,,,,,Data,,Virus Busters,"Cyber Sleuth, ReArise, Links",disponible,,JESmon,Ultimate
+LordKnightmon,,Royal Knights (raid),jefe,,,,,Virus,,Virus Busters,a buscar,no existe,,Lord Knightmon,Ultimate
+Magnamon,,Royal Knights (raid),jefe,,,,,Free,Vaccine/None,Metal Empire,"Cyber Sleuth, Digimon Masters, ReArise, Links",disponible,,Magnamon,Armor/Adult/Perfect/Ultimate/No Level
+UlforceVeedramon,,Royal Knights (raid),jefe,,,,,Vaccine,,Dragon's Roar,"Digimon Masters, Links",disponible,,Ulforce V-dramon,Ultimate
+Duftmon,,Royal Knights (raid),jefe,,,,,Data,,Nature Spirits,a buscar,no existe,,Duftmon,Ultimate
+Omnimon (jefe),,Royal Knights (raid),jefe,,,,,Vaccine,,Metal Empire,"Cyber Sleuth, Digimon Masters, Links",disponible,,Omegamon,Ultimate/Perfect
+Gallantmon (jefe),,Royal Knights (raid),jefe,,,,,Virus,,Dragon's Roar,"Digimon Masters, New Century, ReArise, Links",disponible,,Dukemon,Ultimate
+Sleipmon (jefe),,Royal Knights (raid),jefe,,,,,Vaccine,,Virus Busters,a buscar,no existe,,Sleipmon,Ultimate
+Lucemon Satan Mode,,Dark Area (7 Señores Demonio),jefe,,,,,Virus,Free,Dark Area,a buscar,no existe,,Lucemon: Satan Mode,Ultimate
+Leviamon,,Dark Area (7 Señores Demonio),jefe,,,,,Virus,,Dark Area,"Cyber Sleuth, Digimon Masters, Links",disponible,,Leviamon,Ultimate
+Daemon (Dark Area),,Dark Area (7 Señores Demonio),jefe,,,,,Virus,,Dark Area,"Cyber Sleuth, Digimon Masters, New Century, Links",disponible,,Demon,Ultimate
+Belphemon Rage Mode,,Dark Area (7 Señores Demonio),jefe,,,,,Virus,,Dark Area,"Cyber Sleuth, Links",disponible,,Belphemon: Rage Mode,Ultimate
+Beelzemon (Dark Area),,Dark Area (7 Señores Demonio),jefe,,,,,Virus,,Dark Area,"Cyber Sleuth, Digimon Masters, Links",disponible,,Beelzebumon,Ultimate
+Barbamon,,Dark Area (7 Señores Demonio),jefe,,,,,Virus,,Dark Area,"Cyber Sleuth, Digimon Masters, Links",disponible,,Barbamon,Ultimate
+Lilithmon (Dark Area),,Dark Area (7 Señores Demonio),jefe,,,,,Virus,Free,Dark Area,"Cyber Sleuth, Digimon Masters, Links",disponible,,Lilithmon,Ultimate/No Level
+Numemon,,Adventure,enemigo-escaneable,,,,sí,Virus,Data,Metal Empire,"Cyber Sleuth, ReArise, Links",disponible,,Numemon,Adult
+Kunemon,,Adventure,enemigo-escaneable,,,,sí,Virus,,Nature Spirits,Digimon Masters,disponible,,Kunemon,Child
+Goburimon,,Adventure,enemigo-escaneable,,,,sí,Virus,,Nightmare Soldiers,"Cyber Sleuth, Time Stranger, Digimon Masters, Links",disponible,,Goburimon,Child
+Tyrannomon,,Adventure,enemigo-escaneable,,,,sí,Data,Vaccine,Metal Empire,"Cyber Sleuth, New Century, ReArise, Links",disponible,,Tyranomon,Adult
+Gazimon,,Adventure,enemigo-escaneable,,,,sí,Virus,,Nature Spirits,"Cyber Sleuth, Time Stranger, Digimon Masters, Links",disponible,,Gazimon,Child
+Bakemon,,Adventure,enemigo-escaneable,,,,sí,Virus,,Nightmare Soldiers,"Cyber Sleuth, Digimon Masters, ReArise, Links",disponible,,Bakemon,Adult
+Mojyamon,,Adventure,enemigo-escaneable,,,,sí,Vaccine,,Nature Spirits,"Digimon Masters, New Century",disponible,,Mojyamon,Adult
+Shellmon,,Adventure,enemigo-escaneable,,,,sí,Data,,Deep Savers,New Century,disponible,,Shellmon,Adult
+Kuwagamon,,Adventure,enemigo-escaneable,,,,sí,Virus,,Nature Spirits,"Digimon Masters, ReArise, Links",disponible,,Kuwagamon,Adult
+Unimon,,Adventure,enemigo-escaneable,,,,sí,Vaccine,,Nature Spirits,Cyber Sleuth,disponible,,Unimon,Adult
+Meramon,,Adventure,enemigo-escaneable,,,,sí,Data,Vaccine,Nature Spirits,"Cyber Sleuth, Digimon Masters, Links",disponible,,Meramon,Adult
+Monochromon,,Adventure,enemigo-escaneable,,,,sí,Data,,Nature Spirits,"Cyber Sleuth, Digimon Masters",disponible,,Monochromon,Adult
+Centarumon,,Adventure,enemigo-escaneable,,,,sí,Data,,Nature Spirits,"Digimon Masters, New Century",disponible,,Centalmon,Adult
+Frigimon,,Adventure,enemigo-escaneable,,,,sí,Vaccine,,Nature Spirits,"Cyber Sleuth, Digimon Masters, ReArise, Links",disponible,,Yukidarumon,Adult
+Elecmon,,Adventure,enemigo-escaneable,,,,sí,Data,,Deep Savers,"Cyber Sleuth, Time Stranger, Digimon Masters, ReArise",disponible,,Elecmon,Child
+Gekomon,,Adventure,enemigo-escaneable,,,,sí,Virus,Data,Nature Spirits,"Cyber Sleuth, Digimon Masters, Links",disponible,,Gekomon,Adult
+Andromon,,Adventure,enemigo-escaneable,,,,sí,Vaccine,Data,Metal Empire,"Digimon Masters, Links",disponible,,Andromon,Perfect
+Seadramon,,Adventure,enemigo-escaneable,,,,sí,Data,,Deep Savers,"Cyber Sleuth, Digimon Masters, ReArise, Links",disponible,,Seadramon,Adult
+Drimogemon,,Adventure,enemigo-escaneable,,,,sí,Data,,Nature Spirits,"Digimon Masters, New Century",disponible,,Drimogemon,Adult/Child
+Coelamon,,Adventure,enemigo-escaneable,,,,sí,Data,,Deep Savers,Cyber Sleuth,disponible,,Coelamon,Adult
+Snimon,,Adventure,enemigo-escaneable,,,,sí,Vaccine,,Unknown,a buscar,no existe,,Snimon,Adult
+Vegiemon,,Adventure,enemigo-escaneable,,,,sí,Virus,,Nature Spirits,"Cyber Sleuth, ReArise, Links",disponible,,Vegimon,Adult
+Garbagemon,,Adventure,enemigo-escaneable,,,,sí,Virus,,Unknown,New Century,disponible,,Gerbemon,Perfect
+Kokatorimon,,Adventure,enemigo-escaneable,,,,sí,Data,Vaccine,Wind Guardians,New Century,disponible,,Cockatrimon,Adult
+Whamon,,Adventure,enemigo-escaneable,,,,sí,Vaccine,,Deep Savers,"Digimon Masters, ReArise, Links",disponible,,Whamon,Adult

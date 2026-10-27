@@ -1,0 +1,32 @@
+{
+  "nombre": "Terriermon",
+  "etapa": "Rookie",
+  "tamano_frame": 96,
+  "animaciones": {
+    "idle": {
+      "frames": 12,
+      "fps": 10,
+      "loop": true
+    },
+    "correr": {
+      "frames": 7,
+      "fps": 10,
+      "loop": true
+    },
+    "ataque": {
+      "frames": 12,
+      "fps": 10,
+      "loop": false
+    },
+    "golpe": {
+      "frames": 10,
+      "fps": 10,
+      "loop": false
+    },
+    "victoria": {
+      "frames": 12,
+      "fps": 10,
+      "loop": false
+    }
+  }
+}

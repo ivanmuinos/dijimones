@@ -1,0 +1,244 @@
+Agumon:CS TS DMO NC RA LK
+Agumon (Savers):CS TS DMO NC RA LK
+Agunimon:CS DMO
+Aldamon:NC
+Alphamon:CS DMO RA LK
+Andromon:DMO LK
+Angemon:CS DMO LK
+Angewomon:DMO LK
+Angoramon:
+Ankylomon:CS DMO
+Antylamon:CS DMO
+Apocalymon:CS DMO LK
+Aquilamon:CS DMO LK
+Arbormon:DMO
+Armadillomon:CS TS DMO LK
+Arukenimon:DMO
+Bagramon:NC
+Bakemon:CS DMO RA LK
+Ballistamon:DMO
+Barbamon:CS DMO LK
+Beelzemon:CS DMO LK
+Beetlemon:DMO
+Belphemon:DMO
+Belphemon Rage Mode:CS LK
+Beowolfmon:NC
+Birdramon:CS DMO LK
+Biyomon:CS TS DMO LK
+BlackWarGreymon:DMO RA LK
+Blastmon:
+Bukamon:CS TS LK
+BurningGreymon:CS DMO
+Caturamon:RA
+Centarumon:DMO NC
+Cherubimon:CS DMO
+Chirinmon:CS DMO
+Coelamon:CS
+Craniamon:CS DMO
+Crowmon:CS DMO
+Crusadermon:CS DMO LK
+Cutemon:NC
+Cyberdramon:CS DMO
+Daemon:CS DMO NC LK
+Daipenmon:NC
+Damemon:
+DarkKnightmon:
+DemiVeemon:RA
+Devimon:CS DMO LK
+Diaboromon:CS DMO RA
+Digmon:DMO
+Dorulumon:DMO
+Drimogemon:DMO NC
+Duftmon:
+Duskmon:
+Dynasmon:CS DMO
+Elecmon:CS TS DMO RA
+EmperorGreymon:CS DMO
+Eosmon:NC
+Etemon:DMO LK
+ExVeemon:CS DMO LK
+Examon:CS DMO
+Falcomon:CS TS DMO LK
+Flamedramon:CS DMO
+Frigimon:CS DMO RA LK
+Gabumon:CS TS DMO RA LK
+Gallantmon:DMO NC RA LK
+Gammamon:DMO
+Gankoomon:LK
+Gaogamon:CS DMO LK
+Gaomon:CS TS DMO RA LK
+Garbagemon:NC
+Gargomon:CS DMO LK
+Garudamon:DMO LK
+Garurumon:CS DMO LK
+Gatomon:CS DMO LK
+Gazimon:CS TS DMO LK
+Gekomon:CS DMO LK
+GeoGreymon:CS DMO LK
+Gigimon:RA
+Gizumon:
+Goburimon:CS TS DMO LK
+Gomamon:CS TS DMO LK
+GrapLeomon:DMO LK
+Greymon:CS DMO NC LK
+Greymon (Xros):CS DMO NC LK
+Growlmon:CS DMO NC LK
+Grumblemon:DMO
+Guardromon:CS DMO RA LK
+Guilmon:CS TS DMO NC LK
+Gummymon:RA
+Halsemon:DMO
+Hawkmon:CS TS DMO LK
+HerculesKabuterimon:DMO LK
+HiAndromon:DMO LK
+Ikkakumon:CS DMO LK
+Imperialdramon:DMO
+Impmon:CS TS DMO
+Indramon:RA
+Jellymon:
+Jesmon:CS RA LK
+JetSilphymon:NC
+Justimon:CS DMO LK
+Kabuterimon:CS DMO
+KaiserLeomon:
+Kazemon:DMO NC
+KendoGarurumon:CS DMO
+Kimeramon:DMO LK
+Kokatorimon:NC
+Kokomon:RA
+Korikakumon:DMO NC
+Koromon:CS TS DMO
+Kudamon:CS TS DMO NC LK
+Kumamon:TS DMO NC
+Kumbhiramon:RA
+Kunemon:DMO
+Kuwagamon:DMO RA LK
+Kyubimon:CS DMO NC LK
+Lalamon:CS TS DMO LK
+Leomon:CS DMO NC LK
+Leviamon:CS DMO LK
+Lilamon:DMO RA LK
+Lilithmon:CS DMO LK
+Lillymon:CS DMO
+Lobomon:CS DMO
+Lopmon:CS DMO LK
+LordKnightmon:
+Loweemon:DMO NC
+Lucemon:CS TS DMO LK
+Lucemon Satan Mode:
+MachGaogamon:DMO LK
+Machinedramon:DMO LK
+MagnaAngemon:DMO LK
+MagnaGarurumon:CS DMO
+Magnadramon:DMO LK
+Magnamon:CS DMO RA LK
+MailBirdramon:DMO
+Majiramon:RA
+Makuramon:RA
+MaloMyotismon:DMO RA
+MarineAngemon:DMO LK
+MegaGargomon:CS DMO
+MegaKabuterimon:DMO LK
+Meicoomon:RA LK
+Meicrackmon:RA
+Meramon:CS DMO LK
+Mercurymon:DMO
+MetalEtemon:DMO LK
+MetalGarurumon:DMO RA LK
+MetalGreymon:DMO LK
+MetalGreymon (Xros):DMO LK
+MetalKabuterimon:DMO
+MetalSeadramon:DMO LK
+Mihiramon:RA
+Millenniummon:RA LK
+Minomon:
+MirageGaogamon:DMO LK
+Mojyamon:DMO NC
+Monochromon:CS DMO
+Monodramon:CS TS DMO
+Motimon:CS TS LK
+Mummymon:
+Myotismon:CS DMO
+Nefertimon:DMO
+Negamon:
+Numemon:CS RA LK
+Nyaromon:CS TS LK
+Ogremon:CS DMO LK
+Omnimon:CS DMO LK
+Ordinemon:NC
+Paildramon:DMO LK
+Pajiramon:DMO RA
+Palmon:CS TS DMO LK
+Patamon:CS TS DMO LK
+Peckmon:CS DMO RA LK
+Pegasusmon:DMO
+Phoenixmon:DMO LK
+Piedmon:DMO LK
+Poromon:
+Puppetmon:DMO LK
+Quartzmon:
+Raguelmon:RA LK
+Raidramon:DMO RA
+Ranamon:DMO NC
+Rapidmon:CS DMO LK
+Ravemon:CS DMO
+Renamon:CS TS DMO LK
+Reppamon:CS DMO LK
+Rhihimon:NC
+RhinoKabuterimon:
+RiseGreymon:
+Rosemon:DMO LK
+SaberLeomon:DMO RA LK
+Sakuyamon:DMO LK
+Salamon:CS TS DMO LK
+Sandiramon:RA
+Seadramon:CS DMO RA LK
+Seraphimon:DMO LK
+Shakkoumon:CS DMO
+Shellmon:NC
+ShineGreymon:DMO RA LK
+Shoutmon:CS TS DMO LK
+Shoutmon X4:
+Shoutmon X5:
+Shoutmon X7:
+Silphymon:CS DMO
+Sinduramon:DMO RA
+SkullGreymon:DMO RA LK
+Sleipmon:
+Snimon:
+Sparrowmon:
+Starmon:CS DMO RA LK
+Stingmon:CS DMO LK
+Strikedramon:CS DMO
+Sunflowmon:CS DMO RA LK
+Susanoomon:CS DMO LK
+Tactimon:
+Tanemon:CS TS DMO LK
+Taomon:DMO RA LK
+Tentomon:CS TS DMO
+Terriermon:CS TS DMO
+Togemon:CS DMO LK
+Tokomon:CS TS LK
+Tsunomon:CS TS DMO RA LK
+Turuiemon:CS DMO RA
+Tyrannomon:CS NC RA LK
+Ukkomon:
+UlforceVeedramon:DMO LK
+Unimon:CS
+Upamon:DMO
+Vajramon:RA
+Veemon:CS TS DMO RA LK
+Vegiemon:CS RA LK
+Velgemon:
+VenomMyotismon:CS DMO
+Vikaralamon:DMO RA
+Vikemon:DMO LK
+Viximon:
+WarGreymon:DMO RA LK
+WarGrowlmon:DMO NC RA LK
+WereGarurumon:DMO LK
+Whamon:DMO RA LK
+Wormmon:CS TS DMO LK
+Yokomon:CS TS LK
+Zephyrmon:DMO NC
+Zudomon:DMO LK

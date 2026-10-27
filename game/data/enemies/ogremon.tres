@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/enemy_data.gd" id="s"]
+
+[resource]
+script = ExtResource("s")
+species = "Ogremon"
+display_name = "Ogremon"
+hp = 1500.0
+speed = 42.0
+damage = 18.0
+xp = 60
+scale = 1.4
+boss = true
+behavior = 2
+attack_every = 3.5
+attack_damage = 35.0
+attack_radius = 90.0

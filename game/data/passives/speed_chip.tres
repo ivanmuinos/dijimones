@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PassiveData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/passive_data.gd" id="s"]
+
+[resource]
+script = ExtResource("s")
+id = "speed_chip"
+display_name = "Speed Chip"
+description = "+10 % de velocidad."
+stat = "speed"
+per_level = 0.1
+max_level = 5

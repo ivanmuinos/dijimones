@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/enemy_data.gd" id="s"]
+
+[resource]
+script = ExtResource("s")
+species = "Unimon"
+display_name = "Unimon (Engranaje Negro)"
+hp = 600.0
+speed = 55.0
+damage = 16.0
+xp = 40
+scale = 1.4
+boss = true
+behavior = 1
+attack_every = 3.0
+attack_damage = 25.0

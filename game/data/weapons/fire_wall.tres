@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapon_data.gd" id="s"]
+
+[resource]
+script = ExtResource("s")
+id = "fire_wall"
+display_name = "Fire Wall"
+description = "Aura de fuego que quema a los enemigos cercanos."
+kind = 1
+damage = 6.0
+cooldown = 0.5
+amount = 1
+area = 1.0
+color = Color(1, 0.35, 0.1, 1)

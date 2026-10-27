@@ -1,0 +1,32 @@
+{
+  "nombre": "Cherubimon",
+  "etapa": "Mega",
+  "tamano_frame": 96,
+  "animaciones": {
+    "idle": {
+      "frames": 12,
+      "fps": 10,
+      "loop": true
+    },
+    "correr": {
+      "frames": 12,
+      "fps": 10,
+      "loop": true
+    },
+    "ataque": {
+      "frames": 12,
+      "fps": 10,
+      "loop": false
+    },
+    "golpe": {
+      "frames": 12,
+      "fps": 10,
+      "loop": false
+    },
+    "victoria": {
+      "frames": 12,
+      "fps": 10,
+      "loop": false
+    }
+  }
+}

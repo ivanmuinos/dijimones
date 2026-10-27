@@ -1,0 +1,37 @@
+{
+  "nombre": "Unimon",
+  "etapa": "Champion",
+  "tamano_frame": 96,
+  "animaciones": {
+    "idle": {
+      "frames": 12,
+      "fps": 10,
+      "loop": true,
+      "procedural": false
+    },
+    "correr": {
+      "frames": 9,
+      "fps": 10,
+      "loop": true,
+      "procedural": false
+    },
+    "ataque": {
+      "frames": 9,
+      "fps": 10,
+      "loop": false,
+      "procedural": false
+    },
+    "golpe": {
+      "frames": 12,
+      "fps": 10,
+      "loop": false,
+      "procedural": false
+    },
+    "victoria": {
+      "frames": 12,
+      "fps": 10,
+      "loop": false,
+      "procedural": false
+    }
+  }
+}

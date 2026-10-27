@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PassiveData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/passive_data.gd" id="s"]
+
+[resource]
+script = ExtResource("s")
+id = "hp_chip"
+display_name = "HP Chip"
+description = "+20 de vida máxima."
+stat = "max_hp"
+per_level = 20.0
+max_level = 5

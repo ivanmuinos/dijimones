@@ -1,0 +1,37 @@
+{
+  "nombre": "Leviamon",
+  "etapa": "Mega",
+  "tamano_frame": 96,
+  "animaciones": {
+    "idle": {
+      "frames": 12,
+      "fps": 10,
+      "loop": true,
+      "procedural": false
+    },
+    "correr": {
+      "frames": 12,
+      "fps": 10,
+      "loop": true,
+      "procedural": false
+    },
+    "ataque": {
+      "frames": 12,
+      "fps": 10,
+      "loop": false,
+      "procedural": false
+    },
+    "golpe": {
+      "frames": 10,
+      "fps": 10,
+      "loop": false,
+      "procedural": false
+    },
+    "victoria": {
+      "frames": 12,
+      "fps": 10,
+      "loop": false,
+      "procedural": false
+    }
+  }
+}

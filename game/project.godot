@@ -1,0 +1,34 @@
+; Engine configuration file.
+
+config_version=5
+
+[application]
+
+config/name="Dijimones"
+run/main_scene="res://scenes/menu.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+
+[autoload]
+
+DigimonDB="*res://scripts/autoload/digimon_db.gd"
+Session="*res://scripts/autoload/session.gd"
+Music="*res://scripts/autoload/music.gd"
+
+[display]
+
+window/size/viewport_width=640
+window/size/viewport_height=360
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/canvas_textures/default_texture_filter=0
+
+[editor]
+
+export/convert_text_resources_to_binary=false

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/enemy_data.gd" id="s"]
+
+[resource]
+script = ExtResource("s")
+species = "Leomon"
+display_name = "Leomon (Engranaje Negro)"
+hp = 3500.0
+speed = 50.0
+damage = 22.0
+xp = 120
+scale = 1.4
+boss = true
+behavior = 3
+attack_every = 2.6
+attack_damage = 30.0
+shots = 12
+shot_speed = 120.0

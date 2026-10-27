@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/character_data.gd" id="s"]
+[ext_resource type="Resource" path="res://data/weapons/boom_bubble.tres" id="e0"]
+
+[resource]
+script = ExtResource("s")
+id = "patamon"
+display_name = "Patamon"
+line = PackedStringArray("Tokomon", "Patamon", "Angemon")
+evolve_levels = PackedInt32Array(5, 15)
+starting_weapon = ExtResource("e0")
+max_hp = 85.0
+speed = 80.0
+special_names = PackedStringArray("Bubble Blow", "Boom Bubble", "Hand of Fate")
+special_color = Color(1, 0.95, 0.6, 1)
+description = "Rápido pero frágil. Burbujas de aire en abanico."

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapon_data.gd" id="s"]
+
+[resource]
+script = ExtResource("s")
+id = "pepper_breath"
+display_name = "Pepper Breath"
+description = "Bola de fuego al enemigo más cercano."
+kind = 0
+damage = 12.0
+cooldown = 0.7
+amount = 1
+projectile_speed = 240.0
+pierce = 1
+area = 1.0
+color = Color(1, 0.55, 0.15, 1)

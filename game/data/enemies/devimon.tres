@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/enemy_data.gd" id="s"]
+
+[resource]
+script = ExtResource("s")
+species = "Devimon"
+display_name = "Devimon"
+hp = 6000.0
+speed = 48.0
+damage = 26.0
+xp = 250
+scale = 1.5
+boss = true
+behavior = 4
+attack_every = 2.4
+attack_damage = 40.0
+attack_radius = 110.0
+shots = 16
+shot_speed = 130.0
