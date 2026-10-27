@@ -28,7 +28,14 @@ npx wrangler pages deploy build/cloudflare --project-name dijimones
 ```
 
 ## Música
-Temas chiptune **originales** generados con `python3 tools/make_music.py` (no se usan temas oficiales de Digimon).
+Banda sonora **original** generada con `python3 tools/make_music.py` → `game/assets/music/{batalla,menu}.ogg`
+(no se usan temas oficiales de Digimon). El script sintetiza todo: lead de synth, guitarras distorsionadas,
+pads, arpegios, batería, reverb por convolución y delay; las composiciones son propias estilo opening de anime.
+Necesita `numpy` y `ffmpeg` (`python3 -m pip install numpy`).
+
+Si querés usar tus propias pistas (por ejemplo, música con licencia), dejálas como
+`game/assets/music/menu_custom.ogg` y `game/assets/music/batalla_custom.ogg`: `music.gd` las detecta y las
+prefiere automáticamente. Los loops son sin costura (`loop` activado en el stream).
 
 ## Estructura
 | Carpeta | Qué hay |

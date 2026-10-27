@@ -14,7 +14,7 @@ Mundo de papel 2.5D estilo *Paper Mario*, digievolución en plena partida, mini 
 | `game/` | Proyecto de Godot 4.7 (ver `game/README.md`: controles, estructura, export web y deploy) |
 | `blender/` | Pipeline modelo 3D → sprites pixel art con estética unificada (ver `blender/README.md`) |
 | `data/` | `roster.csv` (todos los Digimon planeados por temporada, con datos de Wikimon y disponibilidad de modelos) |
-| `tools/` | Música chiptune original (`make_music.py`) y preparación del build para Cloudflare |
+| `tools/` | Banda sonora original (`make_music.py`) y preparación del build para Cloudflare |
 
 ## Requisitos
 - Godot 4.7 (con plantillas de export web)
